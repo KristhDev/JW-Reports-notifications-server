@@ -30,11 +30,9 @@ export const reportNotification = async () => {
         const notification = {
             contents: {
                 en: '¡Ya es fin de mes! Por favor que no se te olvide entregar tu informe.',
-                es: '¡Ya es fin de mes! Por favor que no se te olvide entregar tu informe.',
             },
             headings:{
                 en: 'Entrega de informe',
-                es: 'Entrega de informe',
             },
             include_external_user_ids: userIds,
         }

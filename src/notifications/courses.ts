@@ -37,12 +37,10 @@ export const coursesNotification = async () => {
 
     const notification = {
         contents: {
-            es: 'Tienes cursos que dar hoy, entra y ve quienes son.',
-            // en: 'Tienes cursos que dar hoy, entra y ve quienes son.'
+            en: 'Tienes cursos que dar hoy, entra y ve quienes son.'
         },
         headings:{
-            // en: 'Cursos bíblicos',
-            es: 'Cursos bíblicos',
+            en: 'Cursos bíblicos',
         },
         include_external_user_ids: userIds,
     }

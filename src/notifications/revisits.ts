@@ -34,12 +34,10 @@ export const revisitsNotification = async () => {
 
     const notification = {
         contents: {
-            es: 'Tienes revisitas para hoy, entra y ve cuáles son.',
             en: 'Tienes revisitas para hoy, entra y ve cuáles son.'
         },
         headings:{
             en: 'Revisitas',
-            es: 'Revisitas',
         },
         include_external_user_ids: userIds,
     }
