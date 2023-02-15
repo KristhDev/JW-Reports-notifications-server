@@ -38,6 +38,8 @@ tiempo real.
  * [Supabase](https://supabase.com)  
  * [OneSignal](https://onesignal.com)
 
+<br>
+
 ## 2) Entorno de desarrollo
 
 Para montar el entorno de desarrollo y correr la aplicación se necesitan los siguientes programas:

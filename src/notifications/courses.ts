@@ -13,9 +13,8 @@ import { sendNotification } from '../utils';
  */
 export const coursesNotification = async () => {
     const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
-    console.log(dayjs().tz('America/Managua').format('HH:mm:ss'));
 
-    const { data: revisits, error: revisitsError } = await supabase.from('lessons')
+    const { data, error } = await supabase.from('lessons')
         .select('courses (user_id)')
         .eq('done', false)
         .eq('courses.suspended', false)
@@ -23,18 +22,19 @@ export const coursesNotification = async () => {
         .gte('next_lesson', `${ now } 00:00`)
         .lte('next_lesson', `${ now } 23:59`);
 
-    if (revisitsError) {
-        console.log(revisitsError);
+    if (error) {
+        console.log(error);
         return;
     }
 
-    if (revisits.length === 0) return;
+    if (data.length === 0) return;
 
-    const arrayIds = new Set(revisits.map(({ courses }) => 
+    const arrayIds = new Set(data.map(({ courses }) => 
         (Array.isArray(courses)) ? courses[0].user_id : courses!.user_id
     ) as string[]);
 
     const userIds = [ ...arrayIds ];
+    console.log(userIds);
 
     const notification = {
         contents: {

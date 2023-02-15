@@ -15,22 +15,21 @@ import { sendNotification } from '../utils';
  */
 export const revisitsNotification = async () => {
     const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
-    console.log(dayjs().tz('America/Managua').format('HH:mm:ss'));
 
-    const { data: revisits, error: revisitsError } = await supabase.from('revisits')
+    const { data, error } = await supabase.from('revisits')
         .select('user_id')
         .eq('done', false)
         .gte('next_visit', `${ now } 00:00`)
         .lte('next_visit', `${ now } 23:59`);
 
-    if (revisitsError) {
-        console.log(revisitsError);
+    if (error) {
+        console.log(error);
         return;
     }
 
-    if (revisits.length === 0) return;
+    if (data.length === 0) return;
 
-    const arrayIds = new Set(revisits.map(({ user_id }) => user_id) as string[]);
+    const arrayIds = new Set(data.map(({ user_id }) => user_id) as string[]);
     const userIds = [ ...arrayIds ];
 
     const notification = {
