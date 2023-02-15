@@ -5,8 +5,6 @@ import axios, { isAxiosError } from 'axios';
  * @param {any} notification - The notification object.
  */
 export const sendNotification = async (notification: any) => {
-    console.log('executed');
-
     try {
         await axios.post(
             'https://onesignal.com/api/v1/notifications',

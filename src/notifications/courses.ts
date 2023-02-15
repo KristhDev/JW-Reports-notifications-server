@@ -34,7 +34,6 @@ export const coursesNotification = async () => {
     ) as string[]);
 
     const userIds = [ ...arrayIds ];
-    console.log(userIds);
 
     const notification = {
         contents: {
