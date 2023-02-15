@@ -1,5 +1,9 @@
 import axios, { isAxiosError } from 'axios';
 
+/**
+ * It sends a notification to OneSignal using the OneSignal REST API.
+ * @param {any} notification - The notification object.
+ */
 export const sendNotification = async (notification: any) => {
     try {
         await axios.post(

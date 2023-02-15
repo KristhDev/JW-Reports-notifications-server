@@ -18,14 +18,14 @@ export const reportNotification = async () => {
     const lastDay = now.endOf('month').get('D');
 
     if (currentDay === lastDay) {
-        const { data, error } = await supabase.from('devices').select();
+        const { data, error } = await supabase.auth.admin.listUsers();
 
         if (error) {
             console.log(error);
             return;
         }
 
-        const tokens = data.map((device) => device.token);
+        const userIds = data.users.map(({ id }) => id);
 
         const notification = {
             contents: {
@@ -36,7 +36,7 @@ export const reportNotification = async () => {
                 en: 'Entrega de informe',
                 es: 'Entrega de informe',
             },
-            include_player_ids: tokens,
+            include_external_user_ids: userIds,
         }
 
         sendNotification(notification);
@@ -44,23 +44,11 @@ export const reportNotification = async () => {
 }
 
 /**
- * It gets all the revisits that are not done and that have a next_visit date between today's 00:00 and
- * 23:59, then it gets all the devices that belong to those revisits, and finally it sends a
- * notification to those devices.
+ * It gets all the revisits that are not done and that have a next_visit date between today's date and
+ * today's date.
  * 
- * The problem is that the notification is sent to all the devices, not only to the ones that belong to
- * the revisits.
- * 
- * I've tried to use the .in() method in different ways, but I always get the same result.
- * 
- * I've also tried to use the .where() method, but I get the same result.
- * 
- * I've also tried to use the .where() method with the .in() method, but I get the same result.
- * 
- * I've also tried to use the .where() method with the .eq() method, but I get the same result.
- * 
- * I've
- * @returns a promise.
+ * Then it gets all the user_ids from those revisits and sends a notification to all of them.
+ * @returns a Promise.
  */
 export const revisitsNotification = async () => {
     const now = dayjs().format('YYYY-MM-DD');
@@ -81,19 +69,6 @@ export const revisitsNotification = async () => {
     const arrayIds = new Set(revisits.map(({ user_id }) => user_id) as string[]);
     const userIds = [ ...arrayIds ];
 
-    const { data: devices, error: devicesError } = await supabase.from('devices')
-        .select('token')
-        .in('user_id', userIds);
-
-    if (devicesError) {
-        console.log(devicesError);
-        return;
-    }
-
-    if (devices.length === 0) return;
-
-    const tokens = devices.map((device) => device.token);
-
     const notification = {
         contents: {
             es: 'Tienes revisitas para hoy, entra y ve cuáles son.',
@@ -103,29 +78,16 @@ export const revisitsNotification = async () => {
             en: 'Revisitas',
             es: 'Revisitas',
         },
-        include_player_ids: tokens,
+        include_external_user_ids: userIds,
     }
 
     sendNotification(notification);
 }
 
 /**
- * It gets all the lessons that are not done and that are scheduled for today, then it gets the devices
- * of the users that have those lessons and sends a notification to those devices.
- * 
- * The problem is that the notification is sent to all the devices of all the users, not only to the
- * devices of the users that have lessons scheduled for today.
- * 
- * I've tried to change the order of the queries, but it doesn't work.
- * 
- * I've also tried to use the `.join()` method, but it doesn't work either.
- * 
- * I've also tried to use the `.where()` method, but it doesn't work either.
- * 
- * I've also tried to use the `.and()` method, but it doesn't work either.
- * 
- * I've also tried to use the `.or()` method, but it doesn't work either.
- * @returns a promise.
+ * It gets all the lessons that are scheduled for today, then it gets the user_id of the users that are
+ * going to have a lesson today, then it sends a notification to those users.
+ * @returns a Promise.
  */
 export const lessonsNotification = async () => {
     const now = dayjs().format('YYYY-MM-DD');
@@ -149,19 +111,6 @@ export const lessonsNotification = async () => {
 
     const userIds = [ ...arrayIds ];
 
-    const { data: devices, error: devicesError } = await supabase.from('devices')
-        .select('token')
-        .in('user_id', userIds);
-
-    if (devicesError) {
-        console.log(devicesError);
-        return;
-    }
-
-    if (devices.length === 0) return;
-
-    const tokens = devices.map((device) => device.token);
-
     const notification = {
         contents: {
             es: 'Tienes cursos que dar hoy, entra y ve quienes son.',
@@ -171,7 +120,7 @@ export const lessonsNotification = async () => {
             en: 'Cursos bíblicos',
             es: 'Cursos bíblicos',
         },
-        include_player_ids: tokens,
+        include_external_user_ids: userIds,
     }
 
     sendNotification(notification);
