@@ -11,4 +11,6 @@ schedule('0 6 * * *', () => {
     reportNotification();
     revisitsNotification();
     coursesNotification();
+
+    console.log('Notifications sent to users');
 });
