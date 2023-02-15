@@ -15,8 +15,7 @@
     "axios": "^1.3.3",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
-    "node-cron": "^3.0.2",
-    "onesignal-node": "^3.4.0"
+    "node-cron": "^3.0.2"
   },
   "devDependencies": {
     "@types/node": "^18.13.0",
