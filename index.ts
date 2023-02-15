@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { schedule } from 'node-cron';
 
 /* Notifications */
-import { lessonsNotification, reportNotification, revisitsNotification } from './src/notifications';
+import { coursesNotification, reportNotification, revisitsNotification } from './src/notifications';
 
 dotenv.config();
 
@@ -10,5 +10,5 @@ dotenv.config();
 schedule('0 6 * * *', () => {
     reportNotification();
     revisitsNotification();
-    lessonsNotification();
+    coursesNotification();
 });

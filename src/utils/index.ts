@@ -21,6 +21,9 @@ export const sendNotification = async (notification: any) => {
     catch (error) {
         if (isAxiosError(error)) {
             console.log(error.response?.data);
+            return;
         }
+
+        console.log(error);
     }
 }
