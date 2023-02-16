@@ -17,8 +17,6 @@ export const reportNotification = async () => {
     const currentDay = now.get('D');
     const lastDay = now.endOf('month').get('D');
 
-    console.log(currentDay, lastDay);
-
     if (currentDay === lastDay) {
         const { data, error } = await supabase.auth.admin.listUsers();
 
