@@ -14,10 +14,10 @@ import { coursesNotification, reportNotification, revisitsNotification } from '.
 dotenv.config();
 
 /* A cron job that runs every day at 6:00 AM. */
-schedule('0 6 * * *', () => {
+// schedule('0 6 * * *', () => {
     reportNotification();
     revisitsNotification();
     coursesNotification();
 
     console.log('Notifications sent to users');
-}, { timezone: 'America/Managua' });
+// }, { timezone: 'America/Managua' });
