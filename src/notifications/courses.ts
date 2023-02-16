@@ -14,7 +14,7 @@ import { sendNotification } from '../utils';
 export const coursesNotification = async () => {
     const now = dayjs().format('YYYY-MM-DD');
     const hour = dayjs();
-    console.log(dayjs.tz(hour.format('HH:mm:ss'), 'America/Managua') );
+    console.log(dayjs.tz(hour.format('HH:mm:ss'), 'GMT-6'));
 
     const { data, error } = await supabase.from('lessons')
         .select('courses (user_id)')
