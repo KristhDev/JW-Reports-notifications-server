@@ -14,7 +14,7 @@ import { sendNotification } from '../utils';
  * @returns a Promise.
  */
 export const revisitsNotification = async () => {
-    const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
+    const now = dayjs().subtract(6, 'hour').format('YYYY-MM-DD');
 
     const { data, error } = await supabase.from('revisits')
         .select('user_id')

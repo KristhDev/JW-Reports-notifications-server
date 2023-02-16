@@ -1,6 +1,4 @@
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
 
 /* Supabase */
 import { supabase } from '../supabase';
@@ -8,18 +6,15 @@ import { supabase } from '../supabase';
 /* Utils */
 import { sendNotification } from '../utils';
 
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
 /**
  * It gets all the lessons that are scheduled for today, then it gets the user_id of the users that are
  * going to have a course today, then it sends a notification to those users.
  * @returns a Promise.
  */
 export const coursesNotification = async () => {
-    const now = dayjs().format('YYYY-MM-DD');
+    const now = dayjs().subtract(6, 'hour').format('YYYY-MM-DD');
 
-    const nic = dayjs();
+    const nic =  dayjs().subtract(6, 'hour');
     console.log(nic.format('HH:mm:ss'));
 
     const { data, error } = await supabase.from('lessons')

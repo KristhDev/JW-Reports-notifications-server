@@ -12,7 +12,7 @@ import { sendNotification } from '../utils';
  * @returns a promise.
  */
 export const reportNotification = async () => {
-    const now = dayjs().tz('America/Managua');
+    const now = dayjs().subtract(6, 'hour');
 
     const currentDay = now.get('D');
     const lastDay = now.endOf('month').get('D');
