@@ -1,10 +1,15 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 /* Supabase */
 import { supabase } from '../supabase';
 
 /* Utils */
 import { sendNotification } from '../utils';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 /**
  * It gets all the lessons that are scheduled for today, then it gets the user_id of the users that are
