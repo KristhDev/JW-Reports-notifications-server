@@ -19,8 +19,8 @@ dayjs.extend(timezone);
 export const coursesNotification = async () => {
     const now = dayjs().format('YYYY-MM-DD');
 
-    const nic = dayjs().tz('America/Managua');
-    console.log(`${ nic.get('year') }-${ nic.get('M') }-${ nic.get('D') }`);
+    const nic = dayjs();
+    console.log(nic.format('HH:mm:ss'));
 
     const { data, error } = await supabase.from('lessons')
         .select('courses (user_id)')

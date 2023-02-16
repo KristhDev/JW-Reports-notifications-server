@@ -1,3 +1,5 @@
+process.env.TZ = 'America/Managua';
+
 import dotenv from 'dotenv';
 import dayjs from 'dayjs';
 import { schedule } from 'node-cron';
@@ -14,7 +16,7 @@ import { coursesNotification, reportNotification, revisitsNotification } from '.
 dotenv.config();
 
 /* A cron job that runs every day at 6:00 AM. */
-schedule('8 12 * * *', () => {
+schedule('12 12 * * *', () => {
     reportNotification();
     revisitsNotification();
     coursesNotification();
