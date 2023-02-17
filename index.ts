@@ -1,5 +1,15 @@
+import dayjs from 'dayjs';
 import dotenv from 'dotenv';
 import { schedule } from 'node-cron';
+
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(timezone);
+dayjs.extend(utc);
+
+const hour = dayjs().tz('America/Managua');
+console.log(hour.format('HH:mm:ss'));
 
 /* Notifications */
 import { coursesNotification, reportNotification, revisitsNotification } from './src/notifications';
