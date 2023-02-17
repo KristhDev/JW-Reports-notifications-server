@@ -12,10 +12,7 @@ import { sendNotification } from '../utils';
  * @returns a Promise.
  */
 export const coursesNotification = async () => {
-    const now = dayjs().subtract(6, 'hour').format('YYYY-MM-DD');
-    const hour = dayjs().subtract(6, 'hour');
-
-    console.log(`${ hour.format('HH:mm') } NIC`);
+    const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
 
     const { data, error } = await supabase.from('lessons')
         .select('courses (user_id)')
@@ -30,7 +27,12 @@ export const coursesNotification = async () => {
         return;
     }
 
-    if (data.length === 0) return;
+    if (data.length === 0) {
+        const hour = dayjs().tz('America/Managua');
+        console.log(`${ hour.format('HH:mm:ss') } There are no courses for today.`);
+
+        return
+    }
 
     const arrayIds = new Set(data.map(({ courses }) => 
         (Array.isArray(courses)) ? courses[0].user_id : courses!.user_id
@@ -48,5 +50,8 @@ export const coursesNotification = async () => {
         include_external_user_ids: userIds,
     }
 
-    sendNotification(notification);
+    sendNotification(notification).then(() => {
+        const hour = dayjs().tz('America/Managua');
+        console.log(`${ hour.format('HH:mm:ss') } Courses notifications sent.`);
+    });
 }

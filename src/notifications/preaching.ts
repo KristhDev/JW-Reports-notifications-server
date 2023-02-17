@@ -12,7 +12,7 @@ import { sendNotification } from '../utils';
  * @returns a promise.
  */
 export const reportNotification = async () => {
-    const now = dayjs().subtract(6, 'hour');
+    const now = dayjs().tz('America/Managua');
 
     const currentDay = now.get('D');
     const lastDay = now.endOf('month').get('D');
@@ -37,6 +37,13 @@ export const reportNotification = async () => {
             include_external_user_ids: userIds,
         }
 
-        sendNotification(notification);
+        sendNotification(notification).then(() => {
+            const hour = dayjs().tz('America/Managua');
+            console.log(`${ hour.format('HH:mm:ss') } Report notification sent.`);
+        });
+    }
+    else {
+        const hour = dayjs().tz('America/Managua');
+        console.log(`${ hour.format('HH:mm:ss') } Reports are not due yet.`);
     }
 }
