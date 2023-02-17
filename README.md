@@ -6,7 +6,7 @@ Este es más que todo una **tarea programada para enviar push notifications** a 
 activa** en la aplicación de JW Reports. Esas notificaciones son para **recordar la entrega del informe, las
 revisitas y cursos bíblicos.**
 
-Este es un pequeño documento que explica las tecnologías, entorno de desarrollo y cómo correr está aplicación.
+Este es un pequeño documento que explica las tecnologías, entorno de desarrollo y cómo correr esta aplicación.
 
 ## 1) Tecnologías
 
@@ -17,7 +17,7 @@ programar tareas en node.js utilizando la **sintaxis crontab completa.**
 ### 1.2) Typescript
 Es un lenguaje de programación libre y de código abierto desarrollado y mantenido por Microsoft. Es un **superconjunto 
 de JavaScript**, que esencialmente añade tipos estáticos y objetos basados en clases. **Extiende la sintaxis de JavaScript**,
-por tanto cualquier código JavaScript existente debería funcionar sin problemas.
+por tanto, cualquier código JavaScript existente debería funcionar sin problemas.
 
 ### 1.3) Supabase
 Es una **alternativa de Firebase de código abierto.** Una **plataforma de bases de datos en la nube** que combina la
@@ -70,18 +70,18 @@ de los proyectos y acelera el proceso de instalación** de paquetes.
 <br>
 
 ## 3) Correr en desarrollo
-Apartir de aquí se explicará cómo levantar el servidor en desarrollo:
+A partir de aquí se explicará cómo levantar el servidor en desarrollo:
 
 ### 3.1) Clonar respositorio
-Lo primero es clonar el repositorio de git, para ello **abre una terminal** (cmd, powershell, gitbash, etc) y escribe el 
-siguente comando:
+Lo primero es clonar el repositorio de git, para ello **abre una terminal** (cmd, powershell, gitbash, etc.) y escribe el 
+siguiente comando:
 
 ```
 git clone https://github.com/KristhDev/JW-Reports-notifications-server.git
 ```
 
 ### 3.2) Variables de entorno
-En el repositorio está un **archivo de ejemplo de variables de entorno** `.env.example`. Copia ese archivo y renombralo
+En el repositorio está un **archivo de ejemplo de variables de entorno** `.env.example`. Copia ese archivo y renómbralo 
 cómo `.env`. Luego **reemplaza los valores por los que da Supabase y OneSignal.** Recuerda que para ello ya **debes tener una cuenta** en Supabase y haber **creado un proyecto**, además de haber **creado una cuenta en OneSignal** y haber configurado
 la parte de las **notificaciones en Android.**
 
@@ -90,14 +90,14 @@ la parte de las **notificaciones en Android.**
 | Es la clave para hacer las operaciones necesarias con un proyecto de Supabase | Es la url del proyecto de Supabase | ID de la aplicación de OneSignal | Es la clave para usar la rest api de OneSignal |
 
 ### 3.3) Instalar dependencias
-Una vez clonado y con las variables de entorno has un ```cd``` a la **raíz del proyecto** y ejecuta el siguiente comando:
+Una vez clonado y con las variables de entorno, has un ```cd``` a la **raíz del proyecto** y ejecuta el siguiente comando:
 ```
 pnpm install
 ``` 
 <br>
 
 En el punto anterior se mencionó que **pnpm es opcional**, puedes usar el gestor que desees, sea ```npm``` o ```yarn```, si 
-vas a cambiar pnpm asegurate de borrar el archivo ```pnpm-lock.yaml```
+vas a cambiar pnpm asegúrate de borrar el archivo ```pnpm-lock.yaml```
 
 Si usas npm:
 ```
@@ -110,7 +110,7 @@ yarn install
 ```
 
 ### 3.4) Correr aplicación
-Una vez instaladas las dependencias ejecuta el siguiente comando:
+Una vez instaladas las dependencias, ejecuta el siguiente comando:
 
 Si usas pnpm:
 ```
@@ -129,7 +129,7 @@ npm start
 
 <br>
 
-Y listo, la aplicación ya estará corriendo localmente. Las tareas se **ejecutaran cada 24 horas a las 6:00 AM,** puedes
+Y listo, la aplicación ya estará corriendo localmente. Las tareas se **ejecutarán cada 24 horas a las 6:00 AM,** puedes
 cambiar la frecuencia de ejecución el archivo `index.ts`.
 
 <br>
