@@ -14,7 +14,7 @@ import { coursesNotification, reportNotification, revisitsNotification } from '.
 dotenv.config();
 
 /* A cron job that runs every day at 6:00 AM. */
-schedule('0 6 * * *', () => {
+schedule('*/10 * * * * *', () => {
     reportNotification();
     revisitsNotification();
     coursesNotification();
