@@ -1,22 +1,21 @@
+import { Response } from 'express';
 import dayjs from 'dayjs';
 
 /* Supabase */
-import { supabase } from '../supabase';
+import { supabase } from '../../supabase';
 
 /* Utils */
-import { sendNotification } from '../utils';
+import { sendNotification } from '../../utils';
 
 /**
- * It gets all the revisits that are not done and that have a next_visit date between today's date and
- * today's date.
- * 
- * Then it gets all the user_ids from those revisits and sends a notification to all of them.
- * @returns a Promise.
+ * It gets all the revisits that are due today and sends a notification to the users that have them
+ * @param {Response} res - Response - This is the response object from the server.
+ * @returns the result of the sendNotification function.
  */
-export const revisitsNotification = async () => {
+export const revisitsNotification = async (res: Response) => {
     const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
 
-    const { data, error } = await supabase.from('revisits')
+    const { data, error, status } = await supabase.from('revisits')
         .select('user_id')
         .eq('done', false)
         .gte('next_visit', `${ now } 00:00`)
@@ -24,7 +23,11 @@ export const revisitsNotification = async () => {
 
     if (error) {
         console.log(error);
-        return;
+
+        return res.status(status).json({
+            msg: error.message,
+            status: status
+        });
     }
 
     if (data.length === 0) {

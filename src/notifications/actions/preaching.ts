@@ -1,17 +1,18 @@
+import { Response } from 'express';
 import dayjs from 'dayjs';
 
 /* Supabase */
-import { supabase } from '../supabase';
+import { supabase } from '../../supabase';
 
 /* Utils */
-import { sendNotification } from '../utils';
+import { sendNotification } from '../../utils';
 
 /**
- * It checks if the current day is the last day of the month, if it is, it gets all the tokens from the
- * database and sends a notification to all of them.
+ * It sends a notification to all users on the last day of the month
+ * @param {Response} res - Response - The response object from the request.
  * @returns a promise.
  */
-export const reportNotification = async () => {
+export const reportNotification = async (res: Response) => {
     const now = dayjs().tz('America/Managua');
 
     const currentDay = now.get('D');
@@ -22,7 +23,11 @@ export const reportNotification = async () => {
 
         if (error) {
             console.log(error);
-            return;
+
+            return res.status(error.status || 500).json({
+                msg: error.message,
+                status: error.status || 500
+            });;
         }
 
         const userIds = data.users.map(({ id }) => id);

@@ -1,21 +1,16 @@
 import dayjs from 'dayjs';
 import dotenv from 'dotenv';
-import { schedule } from 'node-cron';
 
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
+import server from './src/server';
+
 dayjs.extend(timezone);
 dayjs.extend(utc);
 
-/* Notifications */
-import { coursesNotification, reportNotification, revisitsNotification } from './src/notifications';
-
 dotenv.config();
 
-/* A cron job that runs every day at 6:00 AM. */
-schedule('*/20 * * * * *', () => {
-    reportNotification();
-    revisitsNotification();
-    coursesNotification();
-}, { timezone: 'America/Managua' });
+server.listen(process.env.PORT);
+
+console.log(`Server running on port ${ process.env.PORT }`);

@@ -1,20 +1,22 @@
+import { Response } from 'express';
 import dayjs from 'dayjs';
 
 /* Supabase */
-import { supabase } from '../supabase';
+import { supabase } from '../../supabase';
 
 /* Utils */
-import { sendNotification } from '../utils';
+import { sendNotification } from '../../utils';
 
 /**
- * It gets all the lessons that are scheduled for today, then it gets the user_id of the users that are
- * going to have a course today, then it sends a notification to those users.
- * @returns a Promise.
+ * It gets all the courses that are not done, not suspended, not finished, and that have a next lesson
+ * today, and then sends a notification to the users who have those courses.
+ * @param {Response} res - Response - This is the response object from the express server.
+ * @returns An array of objects.
  */
-export const coursesNotification = async () => {
+export const coursesNotification = async (res: Response) => {
     const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
 
-    const { data, error } = await supabase.from('lessons')
+    const { data, error, status } = await supabase.from('lessons')
         .select('courses (user_id)')
         .eq('done', false)
         .eq('courses.suspended', false)
@@ -24,14 +26,18 @@ export const coursesNotification = async () => {
 
     if (error) {
         console.log(error);
-        return;
+
+        return res.status(status).json({
+            msg: error.message,
+            status: status
+        });
     }
 
     if (data.length === 0) {
         const hour = dayjs().tz('America/Managua');
         console.log(`${ hour.format('HH:mm:ss') } There are no courses for today.`);
 
-        return
+        return;
     }
 
     const arrayIds = new Set(data.map(({ courses }) => 
