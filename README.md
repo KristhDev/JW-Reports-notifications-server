@@ -2,7 +2,7 @@
 
 <br>
 
-Este es más que todo una **tarea programada para enviar push notifications** a los usuarios que tengan una **sesión
+Este es más que todo un **microservicio para enviar push notifications** a los usuarios que tengan una **sesión
 activa** en la aplicación de JW Reports. Esas notificaciones son para **recordar la entrega del informe, las
 revisitas y cursos bíblicos.**
 
@@ -10,9 +10,10 @@ Este es un pequeño documento que explica las tecnologías, entorno de desarroll
 
 ## 1) Tecnologías
 
-### 1.1) Node Cron
-Es un **pequeño programador de tareas** en JavaScript puro para node.js **basado en GNU crontab.** Este módulo le permite
-programar tareas en node.js utilizando la **sintaxis crontab completa.**
+### 1.1) Express
+Es un **popular framework de aplicaciones web para Node.js**, que se utiliza para crear aplicaciones web y servicios web
+basados en el protocolo HTTP. Express es una **capa delgada sobre Node.js y proporciona una amplia gama de características**
+para la creación rápida y fácil de aplicaciones web robustas.
 
 ### 1.2) Typescript
 Es un lenguaje de programación libre y de código abierto desarrollado y mantenido por Microsoft. Es un **superconjunto 
@@ -33,7 +34,7 @@ los desarrolladores y propietarios de sitios web **enviar notificaciones push pe
 tiempo real.
 
 ### 1.5) Enlaces
- * [Node Cron](https://github.com/node-cron/node-cron)  
+ * [Express](https://expressjs.com)  
  * [TypeScript](https://www.typescriptlang.org)  
  * [Supabase](https://supabase.com)  
  * [OneSignal](https://onesignal.com)
@@ -85,9 +86,9 @@ En el repositorio está un **archivo de ejemplo de variables de entorno** `.env.
 cómo `.env`. Luego **reemplaza los valores por los que da Supabase y OneSignal.** Recuerda que para ello ya **debes tener una cuenta** en Supabase y haber **creado un proyecto**, además de haber **creado una cuenta en OneSignal** y haber configurado
 la parte de las **notificaciones en Android.**
 
-| SUPABASE_APY_KEY | SUPABASE_URL | ONESIGNAL_APP_ID | ONESIGNAL_REST_API_KEY |
-|------------------|--------------|------------------|------------------------|
-| Es la clave para hacer las operaciones necesarias con un proyecto de Supabase | Es la url del proyecto de Supabase | ID de la aplicación de OneSignal | Es la clave para usar la rest api de OneSignal |
+| ACCESS_TOKEN | SUPABASE_APY_KEY | SUPABASE_URL | ONESIGNAL_APP_ID | ONESIGNAL_REST_API_KEY | PORT |
+|--------------|------------------|--------------|------------------|------------------------|------|
+| Cadena de acceso para realizar las peticiones | Es la clave para hacer las operaciones necesarias con un proyecto de Supabase | Es la url del proyecto de Supabase | ID de la aplicación de OneSignal | Es la clave para usar la rest api de OneSignal | Es el puerto donde estará corriendo el servidor |
 
 ### 3.3) Instalar dependencias
 Una vez clonado y con las variables de entorno, has un ```cd``` a la **raíz del proyecto** y ejecuta el siguiente comando:
@@ -129,8 +130,37 @@ npm start
 
 <br>
 
-Y listo, la aplicación ya estará corriendo localmente. Las tareas se **ejecutarán cada 24 horas a las 6:00 AM,** puedes
-cambiar la frecuencia de ejecución el archivo `index.ts`.
+Y listo, la aplicación ya estará corriendo localmente.
+
+### 3.5) Ejecutar tareas
+La primera versión de este server usaba un cron job para para enviar las notificaciones, pero se opto por otra opción, por un
+servidor rest que al llamar un endpoint se envien las notificaciones.
+
+Para enviar esas notificaciones solo se necesita llamar al siguiente endpoint:
+
+```
+GET http://localhost:9000/api/notifications
+```
+
+A este endpoint se le debe enviar el header de Authorization Berear para
+aceptar la petición:
+
+```json
+{
+    "headers": {
+        "Authorization": "Bearer { ACCESS_TOKEN }"
+    }
+}
+```
+
+Este endpoint regresa un json con dos propiedades:
+
+```json
+{
+    "msg": "Mensaje del estado de la petición",
+    "status": "Código de la respuesta"
+}
+```
 
 <br>
 
