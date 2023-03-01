@@ -133,16 +133,18 @@ npm start
 Y listo, la aplicación ya estará corriendo localmente.
 
 ### 3.5) Ejecutar tareas
-La primera versión de este server usaba un cron job para para enviar las notificaciones, pero se opto por otra opción, por un
-servidor rest que al llamar un endpoint se envien las notificaciones.
+La **primera versión de este server** usaba un **cron job** para enviar las notificaciones, pero se opto por otra opción, por un
+**servidor rest** que al llamar un endpoint se envien las notificaciones.
 
 Para enviar esas notificaciones solo se necesita llamar al siguiente endpoint:
 
 ```
-GET http://localhost:9000/api/notifications
+GET /api/notifications
 ```
 
-A este endpoint se le debe enviar el header de Authorization Berear para
+<br>
+
+A este endpoint se le debe enviar el **header** de ```Authorization Berear``` para
 aceptar la petición:
 
 ```json
