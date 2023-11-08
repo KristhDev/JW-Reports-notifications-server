@@ -1,3 +1,3 @@
-export * from './courses';
-export * from './preaching';
-export * from './revisits';
+export { default as CoursesNotifications } from './courses';
+export { default as PreachingNotifications } from './preaching';
+export { default as RevisitsNotifications } from './revisits';
