@@ -33,7 +33,7 @@ class Server {
      * @returns {void} - No return value
      */
     private routes(): void {
-        this.app.use('/api', notifactionsRouter);
+        this.app.use('/api/notifications', notifactionsRouter);
     }
 
     /**
