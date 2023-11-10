@@ -1,8 +1,13 @@
 import express, { Application } from 'express';
+import useragent from 'express-useragent';
 import cors from 'cors';
 
+/* Console */
+import { Logger } from './console';
+
 /* Middlewares */
-import { authCheck } from '../auth/middlewares';
+import { authCheck } from '../auth';
+import { loggerRequest, loggerResponse } from './middlewares';
 
 /* Routes */
 import { router as notifactionsRouter } from '../notifications';
@@ -21,8 +26,11 @@ class Server {
      * - authCheck: handles authentication checks
      */
     private middlewares(): void {
+        this.app.use(useragent.express());
         this.app.use(cors());
         this.app.use(express.json());
+        this.app.use(loggerRequest);
+        this.app.use(loggerResponse);
         this.app.use(authCheck);
     }
 
@@ -46,7 +54,7 @@ class Server {
         this.routes();
 
         this.app.listen(this.port, () => {
-            console.log(`Server running on port ${ this.port }`);
+            Logger.info(`Server listening on port ${ process.env.PORT || 9000 }`);
         });
     }
 }

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../../supabase';
 
 /* Server */
-import { Http, JsonResponse } from '../../server';
+import { Http, JsonResponse, Logger } from '../../server';
 
 /* Utils */
 import { sendNotification } from '../../utils';
@@ -18,7 +18,7 @@ class CoursesNotifications {
      * @param {Response} res - the response object
      * @return {Promise<JsonResponse | void>} - a promise that resolves to a JsonResponse or void
      */
-    public static async daylyCourses(res: Response): Promise<JsonResponse | void> {
+    public static async dailyCourses(res: Response): Promise<JsonResponse | void> {
         try {
             const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
 
@@ -55,7 +55,7 @@ class CoursesNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            console.log(`${ hour.format('HH:mm:ss') } Courses notifications sent.`);
+            Logger.success(`${ hour.format('HH:mm:ss') } Courses notifications sent.`);
         } 
         catch (error) {
             throw error;

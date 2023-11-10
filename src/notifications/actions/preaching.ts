@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../../supabase';
 
 /* Server */
-import { Http, JsonResponse } from '../../server';
+import { Http, JsonResponse, Logger } from '../../server';
 
 /* Utils */
 import { sendNotification } from '../../utils';
@@ -26,12 +26,13 @@ class PreachingNotifications {
 
             if (currentDay !== lastDay) {
                 const hour = dayjs().tz('America/Managua');
-                console.log(`${ hour.format('HH:mm:ss') } Reports are not due yet.`);
+                Logger.success(`${ hour.format('HH:mm:ss') } Reports are not due yet.`);
+
+                return;
             }
 
             const { data, error } = await supabase.auth.admin.listUsers();
-
-            if (error) return Http.sendResp(error.message, 500, res);
+            if (error) return Http.sendResp(error.message, Http.INTERNAL_SERVER_ERROR, res);
 
             const userIds = data.users.map(({ id }) => id);
 
@@ -43,7 +44,7 @@ class PreachingNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            console.log(`${ hour.format('HH:mm:ss') } Report notification sent.`);
+            Logger.success(`${ hour.format('HH:mm:ss') } Report notification sent.`);
         } 
         catch (error) {
             throw error;
