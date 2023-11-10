@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { supabase } from '../../supabase';
 
 /* Server */
-import { Http, JsonResponse } from '../../server';
+import { Http, JsonResponse, Logger } from '../../server';
 
 /* Utils */
 import { sendNotification } from '../../utils';
@@ -31,7 +31,7 @@ class RevisitsNotifications {
 
             if (data.length === 0) {
                 const hour = dayjs().tz('America/Managua');
-                console.log(`${ hour.format('HH:mm:ss') } There are no revisits for today.`);
+                Logger.success(`${ hour.format('HH:mm:ss') } There are no revisits for today.`);
 
                 return;
             }
@@ -47,7 +47,7 @@ class RevisitsNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            console.log(`${ hour.format('HH:mm:ss') } Revisits notifications sent.`);
+            Logger.success(`${ hour.format('HH:mm:ss') } Revisits notifications sent.`);
         } 
         catch (error) {
             throw error;

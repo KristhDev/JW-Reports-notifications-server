@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { check } from 'express-validator';
 
 /* Server */
-import { Http, JsonResponse, validateRequest } from '../../server';
+import { Http, JsonResponse, Logger, validateRequest } from '../../server';
 
 /* Actions */
 import { PreachingNotifications, RevisitsNotifications, CoursesNotifications, ApplicationNotifications } from '../actions';
@@ -10,7 +10,7 @@ import { PreachingNotifications, RevisitsNotifications, CoursesNotifications, Ap
 const router = Router();
 
 /* This is a route that is called when the user navigates to the /notifications route. */
-router.get('/daily', async (_, res): Promise<JsonResponse> => {
+router.get('/daily', async (req, res): Promise<JsonResponse> => {
     try {
         await PreachingNotifications.rememberReport(res);
         await RevisitsNotifications.dailyRevisits(res);
@@ -19,6 +19,13 @@ router.get('/daily', async (_, res): Promise<JsonResponse> => {
         return Http.sendResp('Notifications sent successfully', Http.OK, res);
     } 
     catch (error) {
+        const userAgent = (req.useragent?.browser !== 'unknown') 
+            ? `${ req.useragent?.browser } ${ req.useragent?.version } ${ req.useragent?.os } ${ req.useragent?.platform }` 
+            : req.useragent?.source;
+
+        const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status 500 ${ (error as any).message }`;
+        Logger.error(message);
+
         return Http.internalServerError(res);
     }
 });
@@ -44,6 +51,13 @@ router.post('/new-version', [
             return Http.sendResp('New app version notification sent successfully', Http.OK, res);
         } 
         catch (error) {
+            const userAgent = (req.useragent?.browser !== 'unknown') 
+                ? `${ req.useragent?.browser } ${ req.useragent?.version } ${ req.useragent?.os } ${ req.useragent?.platform }` 
+                : req.useragent?.source;
+
+            const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status 500 ${ (error as any).message }`;
+            Logger.error(message);
+
             return Http.internalServerError(res);
         }
     }
