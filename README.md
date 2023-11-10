@@ -33,7 +33,7 @@ Es una **plataforma de mensajería y automatización de notificaciones push** pa
 los desarrolladores y propietarios de sitios web **enviar notificaciones push personalizadas y automatizadas** a los usuarios en
 tiempo real.
 
-### 1.5) Enlaces
+### 1.6) Enlaces
  * [Express](https://expressjs.com)  
  * [TypeScript](https://www.typescriptlang.org)  
  * [Supabase](https://supabase.com)  
@@ -83,7 +83,7 @@ git clone https://github.com/KristhDev/JW-Reports-notifications-server.git
 
 ### 3.2) Variables de entorno
 En el repositorio está un **archivo de ejemplo de variables de entorno** `.env.example`. Copia ese archivo y renómbralo 
-cómo `.env`. Luego **reemplaza los valores por los que da Supabase y OneSignal.** Recuerda que para ello ya **debes tener una cuenta** en Supabase y haber **creado un proyecto**, además de haber **creado una cuenta en OneSignal** y haber configurado
+cómo `.env`. Luego **reemplaza los valores por los que da Supabase, OneSignal y Logtail.** Recuerda que para ello ya **debes tener una cuenta** en Supabase y haber **creado un proyecto**, además de haber **creado una cuenta en OneSignal** y haber configurado
 la parte de las **notificaciones en Android.**
 
 | ACCESS_TOKEN | SUPABASE_APY_KEY | SUPABASE_URL | ONESIGNAL_APP_ID | ONESIGNAL_REST_API_KEY | PORT |
@@ -92,7 +92,7 @@ la parte de las **notificaciones en Android.**
 
 ### 3.3) Instalar dependencias
 Una vez clonado y con las variables de entorno, has un ```cd``` a la **raíz del proyecto** y ejecuta el siguiente comando:
-```
+```shell
 pnpm install
 ``` 
 <br>
@@ -101,12 +101,12 @@ En el punto anterior se mencionó que **pnpm es opcional**, puedes usar el gesto
 vas a cambiar pnpm asegúrate de borrar el archivo ```pnpm-lock.yaml```
 
 Si usas npm:
-```
+```shell
 npm install
 ```
 
 Si usas yarn:
-```
+```shell
 yarn install
 ```
 
@@ -114,17 +114,17 @@ yarn install
 Una vez instaladas las dependencias, ejecuta el siguiente comando:
 
 Si usas pnpm:
-```
+```shell
 pnpm start
 ```
 
 Si usas yarn:
-```
+```shell
 yarn start
 ``` 
 
 Si usas npm:
-```
+```shell
 npm start
 ```
 
@@ -138,13 +138,28 @@ La **primera versión de este server** usaba un **cron job** para enviar las not
 
 Para enviar esas notificaciones solo se necesita llamar al siguiente endpoint:
 
+```shell
+GET /api/notifications/daily
 ```
-GET /api/notifications
+
+Luego está otro endpoint para enviar notificaciones de actualizaciones:
+
+```shell
+POST /api/notifications/new-version
+```
+
+Está petición necesita los el siguiente body:
+
+```json
+{
+    "version": "La nueva versión de la aplicación",
+    "lauchUrl": "La url de descarga de la nueva versión de la aplicación"
+}
 ```
 
 <br>
 
-A este endpoint se le debe enviar el **header** de ```Authorization Berear``` para
+A estos endpoints se le debe enviar el **header** de ```Authorization Berear``` para
 aceptar la petición:
 
 ```json
@@ -155,7 +170,7 @@ aceptar la petición:
 }
 ```
 
-Este endpoint regresa un json con dos propiedades:
+Estos endpoints regresan un json con dos propiedades:
 
 ```json
 {
