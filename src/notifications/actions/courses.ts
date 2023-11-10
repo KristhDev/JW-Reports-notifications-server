@@ -18,7 +18,7 @@ class CoursesNotifications {
      * @param {Response} res - the response object
      * @return {Promise<JsonResponse | void>} - a promise that resolves to a JsonResponse or void
      */
-    public static async daylyCourses(res: Response): Promise<JsonResponse | void> {
+    public static async dailyCourses(res: Response): Promise<JsonResponse | void> {
         try {
             const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
 

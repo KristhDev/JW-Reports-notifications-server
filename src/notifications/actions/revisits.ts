@@ -17,7 +17,7 @@ class RevisitsNotifications {
      * @param {Response} res - The HTTP response object
      * @return {Promise<JsonResponse | void>} Returns a promise that resolves to a JsonResponse or void if there are no revisits for today.
      */
-    public static async daylyRevisits(res: Response): Promise<JsonResponse | void> {
+    public static async dailyRevisits(res: Response): Promise<JsonResponse | void> {
         try {
             const now = dayjs().tz('America/Managua').format('YYYY-MM-DD');
 

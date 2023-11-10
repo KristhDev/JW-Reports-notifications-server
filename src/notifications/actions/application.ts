@@ -21,7 +21,7 @@ class ApplicationNotifications {
     public static async newVersion(req: Request, res: Response): Promise<JsonResponse | void> {
         try {
             const { data, error } = await supabase.auth.admin.listUsers();
-            if (error) return Http.sendResp(error.message, 500, res);
+            if (error) return Http.sendResp(error.message, Http.INTERNAL_SERVER_ERROR, res);
 
             const { version, launchUrl } = req.body;
 

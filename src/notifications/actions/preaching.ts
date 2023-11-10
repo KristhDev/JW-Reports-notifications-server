@@ -27,11 +27,12 @@ class PreachingNotifications {
             if (currentDay !== lastDay) {
                 const hour = dayjs().tz('America/Managua');
                 console.log(`${ hour.format('HH:mm:ss') } Reports are not due yet.`);
+
+                return;
             }
 
             const { data, error } = await supabase.auth.admin.listUsers();
-
-            if (error) return Http.sendResp(error.message, 500, res);
+            if (error) return Http.sendResp(error.message, Http.INTERNAL_SERVER_ERROR, res);
 
             const userIds = data.users.map(({ id }) => id);
 
