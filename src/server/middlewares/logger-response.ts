@@ -27,10 +27,18 @@ export const loggerResponse = (req: Request, res: Response, next: NextFunction):
     }
 
     res.on('finish', async () => {
-        const content = (res as any).bodyContent;
+        try {
+            const content = (res as any).bodyContent;
+            if (content.status >= 200 && content.status < 300) await Logger.success(content.msg);
+            else await Logger.error(content.msg);
+        } 
+        catch (error) {
+            const userAgent = (req.useragent?.browser !== 'unknown') 
+            ? `${ req.useragent?.browser } ${ req.useragent?.version } ${ req.useragent?.os } ${ req.useragent?.platform }` 
+            : req.useragent?.source;
 
-        if (content.status >= 200 && content.status < 300) await Logger.success(content.msg);
-        else await Logger.error(content.msg);
+            await Logger.error(`${ req.method } ${ req.path } IP ${ req.ip } ${ userAgent } ${ (error as any).message }`);
+        }
     });
 
     next();

@@ -118,8 +118,13 @@ class Logger {
      * @return {Promise<void>} This function does not return a value.
      */
     public static async info(message: string): Promise<void> {
-        Logger.log.info(message);
-        await Logger.logtial.flush();
+        try {
+            Logger.log.info(message);
+            await Logger.logtial.flush();
+        } 
+        catch (error) {
+            throw error;
+        }
     }
 
     /**
@@ -145,8 +150,13 @@ class Logger {
      * @return {Promise<void>} This function does not return a value.
      */
     public static async error(message: string): Promise<void> {
-        Logger.log.error(message);
-        await Logger.logtial.flush();
+        try {
+            Logger.log.error(message);
+            await Logger.logtial.flush();
+        } 
+        catch (error) {
+            throw error;
+        }
     }
 }
 
