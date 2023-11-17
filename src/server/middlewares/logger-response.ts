@@ -19,14 +19,19 @@ export const loggerResponse = (req: Request, res: Response, next: NextFunction):
     const originalSend = res.send;
 
     res.send = function (body) {
-        const { status, msg } = JSON.parse(body);
-        const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status ${ status } ${ msg }`;
-
-        if (status >= 200 && status < 300) Logger.success(message).then(() => originalSend.call(this, body));
-        else Logger.error(message).then(() => originalSend.call(this, body));
+        let { status, msg } = JSON.parse(body);
+        msg = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status ${ status } ${ msg }`;
+        res = Object.assign(res, { bodyContent: { status, msg } });
 
         return originalSend.call(this, body);
     }
+
+    res.on('finish', async () => {
+        const content = (res as any).bodyContent;
+
+        if (content.status >= 200 && content.status < 300) await Logger.success(content.msg);
+        else await Logger.error(content.msg);
+    });
 
     next();
 }
