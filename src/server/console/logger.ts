@@ -129,8 +129,13 @@ class Logger {
      * @return {Promise<void>} This function does not return a value.
      */
     public static async success(message: string): Promise<void> {
-        Logger.log.log('success', message);
-        await Logger.logtial.flush();
+        try {
+            Logger.log.log('success', message);
+            await Logger.logtial.flush();
+        } 
+        catch (error) {
+            throw error;
+        }
     }
 
     /**
