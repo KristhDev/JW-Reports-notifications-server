@@ -12,9 +12,11 @@ const router = Router();
 /* This is a route that is called when the user navigates to the /notifications route. */
 router.get('/daily', async (req, res): Promise<JsonResponse> => {
     try {
-        await PreachingNotifications.rememberReport(res);
-        await RevisitsNotifications.dailyRevisits(res);
-        await CoursesNotifications.dailyCourses(res);
+        await Promise.resolve([
+            PreachingNotifications.rememberReport(res),
+            RevisitsNotifications.dailyRevisits(res),
+            CoursesNotifications.dailyCourses(res)
+        ]);
 
         return Http.sendResp('Notifications sent successfully', Http.OK, res);
     } 
