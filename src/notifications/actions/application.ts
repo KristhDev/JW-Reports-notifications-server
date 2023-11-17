@@ -30,7 +30,7 @@ class ApplicationNotifications {
             const notification = {
                 contents: `Ya esta disponible la nueva versión de JW Reports ${ version }. Para obtenerla preciona está notificación y descargala.`,
                 headings: 'Actualización de JW Reports',
-                external_user_ids: [ '8c840151-c4b4-4baa-9bb0-c9e50c7d6f63' ],
+                external_user_ids: userIds,
                 launchUrl
             }
 
