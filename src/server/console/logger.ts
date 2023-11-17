@@ -115,33 +115,33 @@ class Logger {
      * Logs an informational message.
      *
      * @param {string} message - The message to be logged.
-     * @return {void} This function does not return a value.
+     * @return {Promise<void>} This function does not return a value.
      */
-    public static info(message: string): void {
+    public static async info(message: string): Promise<void> {
         Logger.log.info(message);
-        Logger.logtial.flush();
+        await Logger.logtial.flush();
     }
 
     /**
      * Logs a success message.
      *
      * @param {string} message - The success message to log.
-     * @return {void} This function does not return a value.
+     * @return {Promise<void>} This function does not return a value.
      */
-    public static success(message: string): void {
+    public static async success(message: string): Promise<void> {
         Logger.log.log('success', message);
-        Logger.logtial.flush();
+        await Logger.logtial.flush();
     }
 
     /**
      * Logs an error message.
      *
      * @param {string} message - The error message to be logged.
-     * @return {void} 
+     * @return {Promise<void>} This function does not return a value.
      */
-    public static error(message: string): void {
+    public static async error(message: string): Promise<void> {
         Logger.log.error(message);
-        Logger.logtial.flush();
+        await Logger.logtial.flush();
     }
 }
 

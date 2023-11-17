@@ -31,7 +31,7 @@ class RevisitsNotifications {
 
             if (data.length === 0) {
                 const hour = dayjs().tz('America/Managua');
-                Logger.success(`${ hour.format('HH:mm:ss') } There are no revisits for today.`);
+                await Logger.success(`${ hour.format('HH:mm:ss') } There are no revisits for today.`);
 
                 return;
             }
@@ -47,7 +47,7 @@ class RevisitsNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            Logger.success(`${ hour.format('HH:mm:ss') } Revisits notifications sent.`);
+            await Logger.success(`${ hour.format('HH:mm:ss') } Revisits notifications sent.`);
         } 
         catch (error) {
             throw error;

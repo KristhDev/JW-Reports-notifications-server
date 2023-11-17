@@ -26,7 +26,7 @@ class PreachingNotifications {
 
             if (currentDay !== lastDay) {
                 const hour = dayjs().tz('America/Managua');
-                Logger.success(`${ hour.format('HH:mm:ss') } Reports are not due yet.`);
+                await Logger.success(`${ hour.format('HH:mm:ss') } Reports are not due yet.`);
 
                 return;
             }
@@ -44,7 +44,7 @@ class PreachingNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            Logger.success(`${ hour.format('HH:mm:ss') } Report notification sent.`);
+            await Logger.success(`${ hour.format('HH:mm:ss') } Report notification sent.`);
         } 
         catch (error) {
             throw error;
