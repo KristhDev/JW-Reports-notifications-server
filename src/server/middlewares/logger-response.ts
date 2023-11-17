@@ -22,7 +22,7 @@ export const loggerResponse = (req: Request, res: Response, next: NextFunction):
         const { status, msg } = JSON.parse(body);
         const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status ${ status } ${ msg }`;
 
-        if (status >= 200 && status < 300) Logger.success(message);
+        if (status >= 200 && status < 300) Logger.success(message).then(() => originalSend.call(this, body));
         else Logger.error(message).then(() => originalSend.call(this, body));
 
         return originalSend.call(this, body);
