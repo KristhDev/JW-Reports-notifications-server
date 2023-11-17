@@ -17,16 +17,21 @@ export const loggerResponse = (req: Request, res: Response, next: NextFunction):
         : req.useragent?.source;
 
     const originalSend = res.send;
-    
-    res.send = function (body) {
-        const { status, msg } = JSON.parse(body);
-        const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status ${ status } ${ msg }`;
 
-        if (status >= 200 && status < 300) Logger.success(message);
-        else Logger.error(message);
+    res.send = function (body) {
+        let { status, msg } = JSON.parse(body);
+        msg = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status ${ status } ${ msg }`;
+        res = Object.assign(res, { bodyContent: { status, msg } });
 
         return originalSend.call(this, body);
     }
+
+    res.on('finish', () => {
+        const content = (res as any).bodyContent;
+
+        if (content.status >= 200 && content.status < 300) Logger.success(content.msg);
+        else Logger.error(content.msg);
+    });
 
     next();
 }
