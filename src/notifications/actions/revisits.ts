@@ -47,7 +47,7 @@ class RevisitsNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            await Logger.success(`${ hour.format('HH:mm:ss') } Revisits notifications sent.`);
+            Logger.success(`${ hour.format('HH:mm:ss') } Revisits notifications sent.`);
         } 
         catch (error) {
             throw error;

@@ -44,7 +44,7 @@ class PreachingNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            await Logger.success(`${ hour.format('HH:mm:ss') } Report notification sent.`);
+            Logger.success(`${ hour.format('HH:mm:ss') } Report notification sent.`);
         } 
         catch (error) {
             throw error;

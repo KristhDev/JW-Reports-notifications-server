@@ -36,7 +36,7 @@ class ApplicationNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            await Logger.success(`${ hour.format('HH:mm:ss') } New version notification sent.`);
+            Logger.success(`${ hour.format('HH:mm:ss') } New version notification sent.`);
         } 
         catch (error) {
             throw error;
