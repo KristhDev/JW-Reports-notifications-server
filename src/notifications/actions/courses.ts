@@ -55,7 +55,7 @@ class CoursesNotifications {
 
             await sendNotification(notification);
             const hour = dayjs().tz('America/Managua');
-            Logger.success(`${ hour.format('HH:mm:ss') } Courses notifications sent.`);
+            await Logger.success(`${ hour.format('HH:mm:ss') } Courses notifications sent.`);
         } 
         catch (error) {
             throw error;

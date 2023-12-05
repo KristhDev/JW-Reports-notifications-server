@@ -24,7 +24,7 @@ router.get('/daily', async (req, res): Promise<JsonResponse> => {
             : req.useragent?.source;
 
         const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status 500 ${ (error as any).message }`;
-        Logger.error(message);
+        await Logger.error(message);
 
         return Http.internalServerError(res);
     }
@@ -56,7 +56,7 @@ router.post('/new-version', [
                 : req.useragent?.source;
 
             const message = `${ req.method } ${ req.originalUrl } IP ${ req.ip } ${ userAgent } Status 500 ${ (error as any).message }`;
-            Logger.error(message);
+            await Logger.error(message);
 
             return Http.internalServerError(res);
         }

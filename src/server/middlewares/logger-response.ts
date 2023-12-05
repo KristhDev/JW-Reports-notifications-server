@@ -29,14 +29,15 @@ export const loggerResponse = (req: Request, res: Response, next: NextFunction):
     res.on('finish', async () => {
         try {
             const content = (res as any).bodyContent;
-            if (content.status >= 200 && content.status < 300) Logger.success(content.msg);
-            else Logger.error(content.msg);
+            if (content.status >= 200 && content.status < 300) await Logger.success(content.msg);
+            else await Logger.error(content.msg);
         } 
         catch (error) {
-            Logger.error(`${ req.method } ${ req.path } IP ${ req.ip } ${ userAgent } ${ (error as any).message }`);
-        }
-        finally {
-            await Logger.sendLogs();
+            const userAgent = (req.useragent?.browser !== 'unknown') 
+            ? `${ req.useragent?.browser } ${ req.useragent?.version } ${ req.useragent?.os } ${ req.useragent?.platform }` 
+            : req.useragent?.source;
+
+            await Logger.error(`${ req.method } ${ req.path } IP ${ req.ip } ${ userAgent } ${ (error as any).message }`);
         }
     });
 

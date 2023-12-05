@@ -54,8 +54,7 @@ class Server {
         this.routes();
 
         this.app.listen(this.port, async () => {
-            Logger.info(`Server listening on port ${ process.env.PORT || 9000 }`);
-            await Logger.sendLogs();
+            await Logger.info(`Server listening on port ${ process.env.PORT || 9000 }`);
         });
     }
 }
