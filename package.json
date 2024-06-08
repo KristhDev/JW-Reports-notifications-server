@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "KristhDev",
-  "license": "ISC",
+  "license": "CC-BY 4.0",
   "dependencies": {
     "@logtail/node": "^0.4.21",
     "@logtail/winston": "^0.4.21",
