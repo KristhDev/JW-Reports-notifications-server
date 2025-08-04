@@ -7,6 +7,9 @@ import { NotificationsServiceContract } from '@domain/contracts/services';
 /* Dtos */
 import { AppNewVersionDto } from '@domain/dtos/app';
 
+/* Errors */
+import { BaseError, DatasourceError, HttpError } from '@domain/errors';
+
 export class AppFacade implements AppFacadeContract {
     constructor (
         private readonly timeAdapter: TimeAdapterContract,
@@ -35,7 +38,13 @@ export class AppFacade implements AppFacadeContract {
             this.loggerAdapter.info(`${ hour } New version notification sent.`);
         } 
         catch (error) {
-            throw error;
+            const hour = this.timeAdapter.nowWithFormat('HH:mm:ss');
+            let errorToThrow = error;
+
+            if (error instanceof BaseError) this.loggerAdapter.error(`${ hour } ${ error.toString() }`);
+            if (error instanceof DatasourceError) errorToThrow = HttpError.internalServerError();
+
+            throw errorToThrow;
         }
     }
 }

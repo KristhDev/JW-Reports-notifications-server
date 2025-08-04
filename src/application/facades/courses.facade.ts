@@ -4,6 +4,9 @@ import { CoursesFacadeContract } from '@domain/contracts/facades';
 import { CoursesDatasourceContract } from '@domain/contracts/datasources';
 import { NotificationsServiceContract } from '@domain/contracts/services';
 
+/* Errors */
+import { BaseError, DatasourceError, HttpError } from '@domain/errors';
+
 export class CoursesFacade implements CoursesFacadeContract {
     constructor (
         private readonly timeAdapter: TimeAdapterContract,
@@ -34,7 +37,13 @@ export class CoursesFacade implements CoursesFacadeContract {
             this.loggerAdapter.info(`${ hour } Courses notifications sent.`);
         } 
         catch (error) {
-            throw error;
+            const hour = this.timeAdapter.nowWithFormat('HH:mm:ss');
+            let errorToThrow = error;
+
+            if (error instanceof BaseError) this.loggerAdapter.error(`${ hour } ${ error.toString() }`);
+            if (error instanceof DatasourceError) errorToThrow = HttpError.internalServerError();
+
+            throw errorToThrow;
         }
     }
 }
