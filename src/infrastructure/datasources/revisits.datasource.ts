@@ -1,7 +1,7 @@
-import { supabase } from '../../config/supabase';
+import { supabase } from '@config/supabase';
 
-import { TimeAdapterContract } from '../../domain/contracts/adapters';
-import { RevisitsDatasourceContract } from '../../domain/contracts/datasources';
+import { TimeAdapterContract } from '@domain/contracts/adapters';
+import { RevisitsDatasourceContract } from '@domain/contracts/datasources';
 
 export class RevisitsDatasource implements RevisitsDatasourceContract {
     constructor(
@@ -19,8 +19,8 @@ export class RevisitsDatasource implements RevisitsDatasourceContract {
 
         if (error) throw new Error(error.message);
 
-        const userIds = new Set(data.map(({ user_id }) => user_id) as string[]);
+        const userIds = new Set(data.map(({ user_id }) => user_id));
 
-        return [ ...userIds ];
+        return Array.from(userIds);
     }
 }

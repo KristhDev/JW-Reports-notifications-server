@@ -6,11 +6,11 @@ import {
     notifyUsersOfPendingLessonsUsecase,
     notifyUsersOfPendingRevisitsUsecase,
     notifyUsersToSendReportUsecase
-} from '../../../../config/di';
+} from '@config/di';
 
 import { DailyNotificationsController, NewAppVersionNotificationController } from '../controllers';
 
-import { validateRequest } from '../../../server/middlewares';
+import { validateRequest } from '@server/middlewares';
 
 const notificationsRouter = Router();
 

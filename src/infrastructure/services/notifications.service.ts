@@ -1,7 +1,7 @@
-import { env } from '../../config/env';
+import { env } from '@config/env';
 
-import { HttpClientAdapterContract } from '../../domain/contracts/adapters';
-import { NotificationsServiceContract } from '../../domain/contracts/services';
+import { HttpClientAdapterContract } from '@domain/contracts/adapters';
+import { NotificationsServiceContract } from '@domain/contracts/services';
 
 import { HttpBody, HttpHeaders, NewAppVersionNotificationOptions } from '../interfaces';
 

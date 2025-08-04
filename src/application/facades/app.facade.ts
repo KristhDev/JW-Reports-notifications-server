@@ -1,9 +1,9 @@
-import { LoggerAdapterContract, TimeAdapterContract } from '../../domain/contracts/adapters';
-import { UsersDatasourceContract } from '../../domain/contracts/datasources';
-import { AppFacadeContract } from '../../domain/contracts/facades';
-import { NotificationsServiceContract } from '../../domain/contracts/services';
+import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
+import { UsersDatasourceContract } from '@domain/contracts/datasources';
+import { AppFacadeContract } from '@domain/contracts/facades';
+import { NotificationsServiceContract } from '@domain/contracts/services';
 
-import { AppNewVersionDto } from '../../domain/dtos/app';
+import { AppNewVersionDto } from '@domain/dtos/app';
 
 export class AppFacade implements AppFacadeContract {
     constructor (

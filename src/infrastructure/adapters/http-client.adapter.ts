@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig, isAxiosError } from 'axios';
 
-import { HttpClientAdapterContract, LoggerAdapterContract } from '../../domain/contracts/adapters';
+import { HttpClientAdapterContract, LoggerAdapterContract } from '@domain/contracts/adapters';
 
-import { HttpError } from '../../domain/errors';
+import { HttpError } from '@domain/errors';
 
-import { HttpClientOptions } from '../interfaces';
+import { HttpClientOptions } from '@infrastructure/interfaces';
 
 export class HttpClientAdapter implements HttpClientAdapterContract {
     constructor(

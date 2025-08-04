@@ -1,7 +1,7 @@
-import { supabase } from '../../config/supabase';
+import { supabase } from '@config/supabase';
 
-import { TimeAdapterContract } from '../../domain/contracts/adapters';
-import { CoursesDatasourceContract } from '../../domain/contracts/datasources';
+import { TimeAdapterContract } from '@domain/contracts/adapters';
+import { CoursesDatasourceContract } from '@domain/contracts/datasources';
 
 export class CoursesDatasource implements CoursesDatasourceContract {
     constructor(
@@ -25,6 +25,6 @@ export class CoursesDatasource implements CoursesDatasourceContract {
             (Array.isArray(courses)) ? courses[0].user_id : courses!.user_id
         ));
 
-        return [ ...userIds ];
+        return Array.from(userIds);
     }
 }

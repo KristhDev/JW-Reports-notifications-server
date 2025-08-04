@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 /* Utils */
-import { JsonResponseUtil } from '../../../server/utils';
+import { JsonResponseUtil } from '@server/utils';
 
 /**
  * Middleware function to check authentication.

@@ -1,6 +1,6 @@
-import { supabase } from '../../config/supabase';
+import { supabase } from '@config/supabase';
 
-import { UsersDatasourceContract } from '../../domain/contracts/datasources';
+import { UsersDatasourceContract } from '@domain/contracts/datasources';
 
 export class UsersDatasource implements UsersDatasourceContract {
     public async getAllUsersIds(): Promise<string[]> {

@@ -1,7 +1,7 @@
-import { LoggerAdapterContract, TimeAdapterContract } from '../../domain/contracts/adapters';
-import { RevisitsDatasourceContract } from '../../domain/contracts/datasources';
-import { RevisitsFacadeContract } from '../../domain/contracts/facades';
-import { NotificationsServiceContract } from '../../domain/contracts/services';
+import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
+import { RevisitsDatasourceContract } from '@domain/contracts/datasources';
+import { RevisitsFacadeContract } from '@domain/contracts/facades';
+import { NotificationsServiceContract } from '@domain/contracts/services';
 
 export class RevisitsFacade implements RevisitsFacadeContract {
     constructor(

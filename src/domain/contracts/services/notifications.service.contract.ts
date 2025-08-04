@@ -1,4 +1,4 @@
-import { NewAppVersionNotificationOptions } from '../../../infrastructure/interfaces';
+import { NewAppVersionNotificationOptions } from '@infrastructure/interfaces';
 
 export abstract class NotificationsServiceContract {
     public abstract sendCoursesDailyNotification(usersIds: string[]): Promise<void>;

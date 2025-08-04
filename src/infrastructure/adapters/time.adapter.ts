@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-import { TimeAdapterContract } from '../../domain/contracts/adapters';
+import { TimeAdapterContract } from '@domain/contracts/adapters';
 
 export class TimeAdapter implements TimeAdapterContract {
     constructor() {

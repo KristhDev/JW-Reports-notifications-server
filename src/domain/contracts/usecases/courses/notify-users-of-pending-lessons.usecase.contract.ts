@@ -1,3 +1,3 @@
 export abstract class NotifyUsersOfPendingLessonsUsecaseContract {
-    abstract execute(): Promise<void>
+    public abstract execute(): Promise<void>
 }

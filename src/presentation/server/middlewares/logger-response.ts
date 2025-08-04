@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { loggerAdapter } from '../../../config/di';
+import { loggerAdapter } from '@config/di';
 
 /**
  * Logs the response of an API request.

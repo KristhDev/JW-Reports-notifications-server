@@ -1,7 +1,7 @@
 import { addColors, createLogger, format, transports, Logform } from 'winston';
 import timestampColorize from 'winston-timestamp-colorize';
 
-import { LoggerAdapterContract } from '../../domain/contracts/adapters';
+import { LoggerAdapterContract } from '@domain/contracts/adapters';
 
 /**
  * An object that contains color codes for different log levels.

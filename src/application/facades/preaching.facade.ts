@@ -1,7 +1,7 @@
-import { LoggerAdapterContract, TimeAdapterContract } from '../../domain/contracts/adapters';
-import { UsersDatasourceContract } from '../../domain/contracts/datasources';
-import { PreachingFacadeContract } from '../../domain/contracts/facades';
-import { NotificationsServiceContract } from '../../domain/contracts/services';
+import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
+import { UsersDatasourceContract } from '@domain/contracts/datasources';
+import { PreachingFacadeContract } from '@domain/contracts/facades';
+import { NotificationsServiceContract } from '@domain/contracts/services';
 
 export class PreachingFacade implements PreachingFacadeContract {
     constructor (

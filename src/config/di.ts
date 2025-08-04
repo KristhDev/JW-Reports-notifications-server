@@ -1,20 +1,20 @@
-import { HttpClientAdapterContract, LoggerAdapterContract, TimeAdapterContract } from '../domain/contracts/adapters';
-import { CoursesDatasourceContract, RevisitsDatasourceContract, UsersDatasourceContract } from '../domain/contracts/datasources';
-import { NotificationsServiceContract } from '../domain/contracts/services';
-import { AppFacadeContract, CoursesFacadeContract, PreachingFacadeContract, RevisitsFacadeContract } from '../domain/contracts/facades';
-import { NotifyUsersWithNewAppVersionUsecaseContract } from '../domain/contracts/usecases/app';
-import { NotifyUsersToSendReportUsecaseContract } from '../domain/contracts/usecases/preaching';
-import { NotifyUsersOfPendingLessonsUsecaseContract } from '../domain/contracts/usecases/courses';
-import { NotifyUsersOfPendingRevisitsUsecaseContract } from '../domain/contracts/usecases/revisits';
+import { HttpClientAdapterContract, LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
+import { CoursesDatasourceContract, RevisitsDatasourceContract, UsersDatasourceContract } from '@domain/contracts/datasources';
+import { NotificationsServiceContract } from '@domain/contracts/services';
+import { AppFacadeContract, CoursesFacadeContract, PreachingFacadeContract, RevisitsFacadeContract } from '@domain/contracts/facades';
+import { NotifyUsersWithNewAppVersionUsecaseContract } from '@domain/contracts/usecases/app';
+import { NotifyUsersToSendReportUsecaseContract } from '@domain/contracts/usecases/preaching';
+import { NotifyUsersOfPendingLessonsUsecaseContract } from '@domain/contracts/usecases/courses';
+import { NotifyUsersOfPendingRevisitsUsecaseContract } from '@domain/contracts/usecases/revisits';
 
-import { HttpClientAdapter, LoggerAdapter, TimeAdapter } from '../infrastructure/adapters';
-import { CoursesDatasource, RevisitsDatasource, UsersDatasource } from '../infrastructure/datasources';
-import { AppFacade, CoursesFacade, PreachingFacade, RevisitsFacade } from '../application/facades';
-import { NotificationsService } from '../infrastructure/services';
-import { NotifyUsersWithNewAppVersionUseCase } from '../application/usecases/app';
-import { NotifyUsersToSendReportUseCase } from '../application/usecases/preaching';
-import { NotifyUsersOfPendingLessonsUseCase } from '../application/usecases/courses';
-import { NotifyUsersOfPendingRevisitsUsecase } from '../application/usecases/revisits';
+import { HttpClientAdapter, LoggerAdapter, TimeAdapter } from '@infrastructure/adapters';
+import { CoursesDatasource, RevisitsDatasource, UsersDatasource } from '@infrastructure/datasources';
+import { AppFacade, CoursesFacade, PreachingFacade, RevisitsFacade } from '@application/facades';
+import { NotificationsService } from '@infrastructure/services';
+import { NotifyUsersWithNewAppVersionUseCase } from '@application/usecases/app';
+import { NotifyUsersToSendReportUseCase } from '@application/usecases/preaching';
+import { NotifyUsersOfPendingLessonsUseCase } from '@application/usecases/courses';
+import { NotifyUsersOfPendingRevisitsUsecase } from '@application/usecases/revisits';
 
 export const timeAdapter: TimeAdapterContract = new TimeAdapter();
 export const loggerAdapter: LoggerAdapterContract = new LoggerAdapter();

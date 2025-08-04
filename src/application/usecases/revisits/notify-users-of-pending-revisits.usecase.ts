@@ -1,5 +1,5 @@
-import { RevisitsFacadeContract } from '../../../domain/contracts/facades';
-import { NotifyUsersOfPendingRevisitsUsecaseContract } from '../../../domain/contracts/usecases/revisits';
+import { RevisitsFacadeContract } from '@domain/contracts/facades';
+import { NotifyUsersOfPendingRevisitsUsecaseContract } from '@domain/contracts/usecases/revisits';
 
 export class NotifyUsersOfPendingRevisitsUsecase implements NotifyUsersOfPendingRevisitsUsecaseContract {
     constructor (

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { loggerAdapter } from '../../../config/di';
+import { loggerAdapter } from '@config/di';
 
 /**
  * Middleware function that logs incoming requests.

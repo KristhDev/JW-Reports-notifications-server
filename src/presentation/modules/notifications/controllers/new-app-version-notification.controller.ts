@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { AppNewVersionDto } from '../../../../domain/dtos/app';
+import { AppNewVersionDto } from '@domain/dtos/app';
 
-import { NotifyUsersWithNewAppVersionUsecaseContract } from '../../../../domain/contracts/usecases/app';
+import { NotifyUsersWithNewAppVersionUsecaseContract } from '@domain/contracts/usecases/app';
 
-import { JsonResponseUtil } from '../../../server/utils';
+import { JsonResponseUtil } from '@server/utils';
 
 export class NewAppVersionNotificationController {
     constructor(
@@ -19,7 +19,6 @@ export class NewAppVersionNotificationController {
             JsonResponseUtil.success(res, 'New app version notification sent successfully');
         } 
         catch (error) {
-            console.log(error);
             JsonResponseUtil.internalServerError(res);
         }
     }

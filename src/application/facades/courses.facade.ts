@@ -1,8 +1,7 @@
-import { LoggerAdapterContract, TimeAdapterContract } from '../../domain/contracts/adapters';
-
-import { CoursesFacadeContract } from '../../domain/contracts/facades';
-import { CoursesDatasourceContract } from '../../domain/contracts/datasources';
-import { NotificationsServiceContract } from '../../domain/contracts/services';
+import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
+import { CoursesFacadeContract } from '@domain/contracts/facades';
+import { CoursesDatasourceContract } from '@domain/contracts/datasources';
+import { NotificationsServiceContract } from '@domain/contracts/services';
 
 export class CoursesFacade implements CoursesFacadeContract {
     constructor (

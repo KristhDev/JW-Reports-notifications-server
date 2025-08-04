@@ -1,7 +1,7 @@
-import { AppFacadeContract } from '../../../domain/contracts/facades';
-import { NotifyUsersWithNewAppVersionUsecaseContract } from '../../../domain/contracts/usecases/app';
+import { AppFacadeContract } from '@domain/contracts/facades';
+import { NotifyUsersWithNewAppVersionUsecaseContract } from '@domain/contracts/usecases/app';
 
-import { AppNewVersionDto } from '../../../domain/dtos/app';
+import { AppNewVersionDto } from '@domain/dtos/app';
 
 export class NotifyUsersWithNewAppVersionUseCase implements NotifyUsersWithNewAppVersionUsecaseContract {
     constructor (

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { NotifyUsersOfPendingLessonsUsecaseContract } from '../../../../domain/contracts/usecases/courses';
-import { NotifyUsersOfPendingRevisitsUsecaseContract } from '../../../../domain/contracts/usecases/revisits';
-import { NotifyUsersToSendReportUsecaseContract } from '../../../../domain/contracts/usecases/preaching';
+import { NotifyUsersOfPendingLessonsUsecaseContract } from '@domain/contracts/usecases/courses';
+import { NotifyUsersOfPendingRevisitsUsecaseContract } from '@domain/contracts/usecases/revisits';
+import { NotifyUsersToSendReportUsecaseContract } from '@domain/contracts/usecases/preaching';
 
-import { JsonResponseUtil } from '../../../server/utils';
+import { JsonResponseUtil } from '@server/utils';
 
 export class DailyNotificationsController {
     constructor(
@@ -22,7 +22,6 @@ export class DailyNotificationsController {
             JsonResponseUtil.success(res, 'Notifications sent successfully');
         } 
         catch (error) {
-            console.log(error);
             JsonResponseUtil.internalServerError(res);
         }
     }

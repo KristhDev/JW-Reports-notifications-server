@@ -3,17 +3,17 @@ import useragent from 'express-useragent';
 import cors from 'cors';
 
 /* Environment */
-import { env } from '../../config/env';
+import { env } from '@config/env';
 
 /* Contracts */
-import { LoggerAdapterContract } from '../../domain/contracts/adapters';
+import { LoggerAdapterContract } from '@domain/contracts/adapters';
 
 /* Middlewares */
-import { authCheck } from '../modules/auth/middlewares';
+import { authCheck } from '@auth/middlewares';
 import { loggerRequest, loggerResponse } from './middlewares';
 
 /* Routes */
-import { notificationsRouter } from '../modules/notifications/routes';
+import { notificationsRouter } from '@notifications/routes';
 
 class Server {
     private port: number = Number(env.PORT || 9000);
