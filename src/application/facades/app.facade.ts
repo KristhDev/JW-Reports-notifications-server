@@ -18,7 +18,7 @@ export class AppFacade implements AppFacadeContract {
             const usersIds = await this.usersDatasource.getAllUsersIds();
 
             await this.notificationsService.sendNewAppVersionNotification({
-                usersIds: [ '8c840151-c4b4-4baa-9bb0-c9e50c7d6f63' ],
+                usersIds,
                 version: appNewVersionDto.version,
                 launchUrl: appNewVersionDto.launchUrl
             });
