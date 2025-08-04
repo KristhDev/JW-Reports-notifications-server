@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.2",
     "express-useragent": "^1.0.15",
     "express-validator": "^7.1.0",
     "winston": "^3.13.0",
