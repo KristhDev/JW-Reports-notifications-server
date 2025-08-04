@@ -1,5 +1,7 @@
+/* Supabase */
 import { supabase } from '@config/supabase';
 
+/* Contracts */
 import { TimeAdapterContract } from '@domain/contracts/adapters';
 import { RevisitsDatasourceContract } from '@domain/contracts/datasources';
 
@@ -8,6 +10,11 @@ export class RevisitsDatasource implements RevisitsDatasourceContract {
         private readonly timeAdapter: TimeAdapterContract
     ) {}
 
+    /**
+     * Gets the IDs of users that have revisits scheduled for today.
+     * 
+     * @return {Promise<string[]>} The IDs of users that have revisits scheduled for today.
+     */
     public async getUsersIdsOfPendingRevisits(): Promise<string[]> {
         const now = this.timeAdapter.nowWithFormat('YYYY-MM-DD');
 

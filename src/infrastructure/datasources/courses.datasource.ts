@@ -1,5 +1,7 @@
+/* Supabase */
 import { supabase } from '@config/supabase';
 
+/* Contracts */
 import { TimeAdapterContract } from '@domain/contracts/adapters';
 import { CoursesDatasourceContract } from '@domain/contracts/datasources';
 
@@ -8,6 +10,11 @@ export class CoursesDatasource implements CoursesDatasourceContract {
         private readonly timeAdapter: TimeAdapterContract
     ) {}
 
+    /**
+     * Gets the IDs of users that have courses with pending lessons for today.
+     * 
+     * @return {Promise<string[]>} The IDs of users that have courses with pending lessons for today.
+     */
     public async getUsersIdsOfCoursesThatHavePendingLessonsNow(): Promise<string[]> {
         const now = this.timeAdapter.nowWithFormat('YYYY-MM-DD');
 

@@ -1,3 +1,4 @@
+/* Contracts */
 import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
 import { RevisitsDatasourceContract } from '@domain/contracts/datasources';
 import { RevisitsFacadeContract } from '@domain/contracts/facades';
@@ -11,6 +12,11 @@ export class RevisitsFacade implements RevisitsFacadeContract {
         private readonly notificationsService: NotificationsServiceContract
     ) {}
 
+    /**
+     * Notify all users with pending revisits for today.
+     *
+     * @return {Promise<void>} The promise that resolves when the notification is sent.
+     */
     public async notifyUsersOfPendingRevisits(): Promise<void> {
         try {
             const usersIds = await this.revisitsDatasource.getUsersIdsOfPendingRevisits();

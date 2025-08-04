@@ -1,3 +1,4 @@
+/* Contracts */
 import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
 import { CoursesFacadeContract } from '@domain/contracts/facades';
 import { CoursesDatasourceContract } from '@domain/contracts/datasources';
@@ -11,6 +12,11 @@ export class CoursesFacade implements CoursesFacadeContract {
         private readonly notificationsService: NotificationsServiceContract
     ) {}
 
+    /**
+     * Notifies users with pending lessons for today.
+     *
+     * @return {Promise<void>} A promise that resolves when the notification process is complete.
+     */
     public async notifyUsersOfPendingLessons(): Promise<void> {
         try {
             const usersIds = await this.coursesDatasource.getUsersIdsOfCoursesThatHavePendingLessonsNow();

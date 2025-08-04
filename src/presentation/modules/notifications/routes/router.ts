@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { check } from 'express-validator';
 
+/* Dependencies */
 import {
     notifyNewAppVersionUsecase,
     notifyUsersOfPendingLessonsUsecase,
@@ -8,8 +9,10 @@ import {
     notifyUsersToSendReportUsecase
 } from '@config/di';
 
+/* Controllers */
 import { DailyNotificationsController, NewAppVersionNotificationController } from '../controllers';
 
+/* Middlewares */
 import { validateRequest } from '@server/middlewares';
 
 const notificationsRouter = Router();

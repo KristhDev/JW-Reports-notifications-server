@@ -1,8 +1,11 @@
+/* Env */
 import { env } from '@config/env';
 
+/* Contracts */
 import { HttpClientAdapterContract } from '@domain/contracts/adapters';
 import { NotificationsServiceContract } from '@domain/contracts/services';
 
+/* Interfaces */
 import { HttpBody, HttpHeaders, NewAppVersionNotificationOptions } from '../interfaces';
 
 export class NotificationsService implements NotificationsServiceContract {
@@ -10,6 +13,15 @@ export class NotificationsService implements NotificationsServiceContract {
         private readonly httpClientAdapter: HttpClientAdapterContract
     ) {}
 
+    /**
+     * Send a notification to the given users using OneSignal API
+     *
+     * @param {HttpBody} headings the notification headings
+     * @param {HttpBody} contents the notification contents
+     * @param {string[]} usersIds the users to send the notification to
+     * @param {string} [launchUrl] the link to open when the notification is tapped
+     * @returns {Promise<void>} The promise that resolves when the notification is sent
+     */
     private async sendNotification(headings: HttpBody, contents: HttpBody, usersIds: string[], launchUrl?: string): Promise<void> {
         try {
             const url = `${ env.ONESIGNAL_API_URL }/notifications`;
@@ -35,6 +47,12 @@ export class NotificationsService implements NotificationsServiceContract {
         }
     }
 
+    /**
+     * Send a daily notification to the given users that have courses to give today.
+     *
+     * @param {string[]} usersIds the users to send the notification to
+     * @return {Promise<void>} The promise that resolves when the notification is sent
+     */
     public async sendCoursesDailyNotification(usersIds: string[]): Promise<void> {
         try {
             const headings = {
@@ -54,6 +72,12 @@ export class NotificationsService implements NotificationsServiceContract {
         }
     }
 
+    /**
+     * Send a notification to the given users that a new version of the app is available.
+     *
+     * @param {NewAppVersionNotificationOptions} options - The options for the notification.
+     * @return {Promise<void>} The promise that resolves when the notification is sent.
+     */
     public async sendNewAppVersionNotification({ launchUrl, usersIds, version }: NewAppVersionNotificationOptions): Promise<void> {
         try {
             const headings = {
@@ -73,6 +97,12 @@ export class NotificationsService implements NotificationsServiceContract {
         }
     }
 
+    /**
+     * Send a daily notification to the given users that have revisits scheduled for today.
+     *
+     * @param {string[]} usersIds the users to send the notification to
+     * @return {Promise<void>} The promise that resolves when the notification is sent
+     */
     public async sendRevisitsDailyNotification(usersIds: string[]): Promise<void> {
         try {
             const headings = {
@@ -92,6 +122,12 @@ export class NotificationsService implements NotificationsServiceContract {
         }
     }
 
+    /**
+     * Send a notification to the given users that are at the end of the month and need to turn in their report.
+     *
+     * @param {string[]} usersIds the users to send the notification to
+     * @return {Promise<void>} The promise that resolves when the notification is sent
+     */
     public async sendPreachingReportNotification(usersIds: string[]): Promise<void> {
         try {
             const headings = {

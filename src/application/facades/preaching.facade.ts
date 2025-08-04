@@ -1,3 +1,4 @@
+/* Contracts */
 import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
 import { UsersDatasourceContract } from '@domain/contracts/datasources';
 import { PreachingFacadeContract } from '@domain/contracts/facades';
@@ -11,6 +12,11 @@ export class PreachingFacade implements PreachingFacadeContract {
         private readonly notificationsService: NotificationsServiceContract
     ) {}
 
+    /**
+     * Notify all users to send their preaching reports.
+     *
+     * @return {Promise<void>} The promise that resolves when the notification is sent.
+     */
     public async notifyUsersToSendReports(): Promise<void> {
         try {
             const currentDay = this.timeAdapter.getCurrentDay();

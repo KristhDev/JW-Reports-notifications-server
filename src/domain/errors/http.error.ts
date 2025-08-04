@@ -9,22 +9,46 @@ export class HttpError extends Error {
         this.status = status;
     }
 
-    public toJSON() {
+    /**
+     * Converts the HttpError instance into a JSON object.
+     *
+     * @return {{ message: string, status: number }} An object containing the error message and status code.
+     */
+    public toJSON(): { message: string, status: number } {
         return {
             message: this.message,
             status: this.status
         };
     }
 
+    
+    /**
+     * Returns an HttpError with a status code of 400 (Bad Request).
+     *
+     * @param {string} message The error message.
+     * @return {HttpError} An instance of HttpError with a status code of 400.
+     */
     public static badRequest(message: string): HttpError {
         return new HttpError(message, httpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Returns an HttpError with a status code of 404 (Not Found).
+     *
+     * @param {string} [message] The error message. If not provided, a default message is used.
+     * @return {HttpError} An instance of HttpError with a status code of 404.
+     */
     public static notFound(message?: string): HttpError {
-        return new HttpError(message || 'Lo sentimos, pero no encontramos la página solicitada.', httpStatus.NOT_FOUND);
+        return new HttpError(message || "Sorry, but we couldn't find the requested route.", httpStatus.NOT_FOUND);
     }
 
+    /**
+     * Returns an HttpError with a status code of 500 (Internal Server Error).
+     *
+     * @param {string} [message] The error message. If not provided, a default message is used.
+     * @return {HttpError} An instance of HttpError with a status code of 500.
+     */
     public static internalServerError(message?: string): HttpError {
-        return new HttpError(message || 'Ocurrio un error inesperado. Intente de nuevo más tarde.', httpStatus.INTERNAL_SERVER_ERROR);
+        return new HttpError(message || 'An unexpected error occurred. Please try again later.', httpStatus.INTERNAL_SERVER_ERROR);
     }
 }
