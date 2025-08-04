@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-/* Console */
-import { Logger } from '../console';
+import { loggerAdapter } from '../../../config/di';
 
 /**
  * Logs the response of an API request.
@@ -29,8 +28,8 @@ export const loggerResponse = (req: Request, res: Response, next: NextFunction):
     res.on('finish', () => {
         const content = (res as any).bodyContent;
 
-        if (content.status >= 200 && content.status < 300) Logger.success(content.msg);
-        else Logger.error(content.msg);
+        if (content.status >= 200 && content.status < 300) loggerAdapter.success(content.msg);
+        else loggerAdapter.error(content.msg);
     });
 
     next();

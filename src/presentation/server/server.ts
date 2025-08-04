@@ -2,19 +2,26 @@ import express, { Application } from 'express';
 import useragent from 'express-useragent';
 import cors from 'cors';
 
-/* Console */
-import { Logger } from './console';
+/* Environment */
+import { env } from '../../config/env';
+
+/* Contracts */
+import { LoggerAdapterContract } from '../../domain/contracts/adapters';
 
 /* Middlewares */
-import { authCheck } from '../auth';
+import { authCheck } from '../modules/auth/middlewares';
 import { loggerRequest, loggerResponse } from './middlewares';
 
 /* Routes */
-import { router as notifactionsRouter } from '../notifications';
+import { notificationsRouter } from '../modules/notifications/routes';
 
 class Server {
-    private port: number = Number(process.env.PORT || 9000);
+    private port: number = Number(env.PORT || 9000);
     private app: Application = express();
+
+    constructor(
+        private readonly loggerAdapter: LoggerAdapterContract,
+    ) {}
 
     /**
      * Initializes the middlewares for the Express app.
@@ -41,7 +48,7 @@ class Server {
      * @returns {void} - No return value
      */
     private routes(): void {
-        this.app.use('/api/notifications', notifactionsRouter);
+        this.app.use('/api/notifications', notificationsRouter);
     }
 
     /**
@@ -54,7 +61,7 @@ class Server {
         this.routes();
 
         this.app.listen(this.port, () => {
-            Logger.info(`Server listening on port ${ process.env.PORT || 9000 }`);
+            this.loggerAdapter.info(`Server listening on port ${ this.port }`);
         });
     }
 }

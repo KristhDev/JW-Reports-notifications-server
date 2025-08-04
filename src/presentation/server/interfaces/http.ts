@@ -2,7 +2,7 @@ import { Response } from 'express';
 
 export interface JsonBody {
     status: number;
-    msg?: string;
+    message?: string;
     [key: string]: any;
 }
 

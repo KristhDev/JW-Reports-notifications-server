@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-/* Console */
-import { Logger } from '../console';
+import { loggerAdapter } from '../../../config/di';
 
 /**
  * Middleware function that logs incoming requests.
@@ -16,7 +15,7 @@ export const loggerRequest = (req: Request, res: Response, next: NextFunction): 
         ? `${ req.useragent?.browser } ${ req.useragent?.version } ${ req.useragent?.os } ${ req.useragent?.platform }` 
         : req.useragent?.source;
 
-    Logger.info(`${ req.method } ${ req.path } IP ${ req.ip } ${ userAgent }`);
+    loggerAdapter.info(`${ req.method } ${ req.path } IP ${ req.ip } ${ userAgent }`);
 
     next();
 }
