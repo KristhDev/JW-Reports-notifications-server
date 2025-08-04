@@ -1,3 +1,3 @@
 export abstract class CoursesFacadeContract {
-    public abstract notifyUsersWithPendingLessons(): Promise<void>;
+    public abstract notifyUsersOfPendingLessons(): Promise<void>;
 }
