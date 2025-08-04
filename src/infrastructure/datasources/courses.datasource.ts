@@ -5,6 +5,9 @@ import { supabase } from '@config/supabase';
 import { TimeAdapterContract } from '@domain/contracts/adapters';
 import { CoursesDatasourceContract } from '@domain/contracts/datasources';
 
+/* Errors */
+import { DatasourceError } from '@domain/errors';
+
 export class CoursesDatasource implements CoursesDatasourceContract {
     constructor(
         private readonly timeAdapter: TimeAdapterContract
@@ -26,7 +29,10 @@ export class CoursesDatasource implements CoursesDatasourceContract {
             .gte('next_lesson', `${ now } 00:00`)
             .lte('next_lesson', `${ now } 23:59`);
 
-        if (error) throw new Error(error.message);
+        if (error) {
+            const errorData = { code: error.code, details: error.details, hint: error.hint, message: error.message };
+            throw new DatasourceError(error.message, errorData);
+        }
 
         const userIds = new Set(data.map(({ courses }) => 
             (Array.isArray(courses)) ? courses[0].user_id : courses!.user_id

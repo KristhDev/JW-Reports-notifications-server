@@ -4,6 +4,9 @@ import { supabase } from '@config/supabase';
 /* Contracts */
 import { UsersDatasourceContract } from '@domain/contracts/datasources';
 
+/* Errors */
+import { DatasourceError } from '@domain/errors';
+
 export class UsersDatasource implements UsersDatasourceContract {
 
     /**
@@ -13,7 +16,11 @@ export class UsersDatasource implements UsersDatasourceContract {
      */
     public async getAllUsersIds(): Promise<string[]> {
         const { data, error } = await supabase.auth.admin.listUsers();
-        if (error) throw new Error(error.message);
+
+        if (error) {
+            const errorData = { name: error.name, code: error.code, message: error.message };
+            throw new DatasourceError(errorData.message, errorData);
+        }
 
         return data.users.map(user => user.id);
     }
