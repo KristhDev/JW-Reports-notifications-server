@@ -1,6 +1,13 @@
 import { httpStatus } from '@application/constants';
 
-export class HttpError extends Error {
+import { BaseError } from './base.error';
+
+export interface HttpErrorJson {
+    message: string;
+    status: number;
+}
+
+export class HttpError extends BaseError<HttpErrorJson> {
     public status: number;
 
     constructor(message: string, status: number) {
@@ -9,19 +16,17 @@ export class HttpError extends Error {
         this.status = status;
     }
 
-    /**
-     * Converts the HttpError instance into a JSON object.
-     *
-     * @return {{ message: string, status: number }} An object containing the error message and status code.
-     */
-    public toJSON(): { message: string, status: number } {
+    public toJSON(): HttpErrorJson {
         return {
             message: this.message,
-            status: this.status
+            status: this.status,
         };
     }
 
-    
+    public toString(): string {
+        return `${ this.name } Status ${ this.status } Message ${ this.message }`;
+    }
+
     /**
      * Returns an HttpError with a status code of 400 (Bad Request).
      *
