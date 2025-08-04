@@ -2,15 +2,17 @@ import { LoggerAdapterContract, TimeAdapterContract } from '../../domain/contrac
 
 import { CoursesFacadeContract } from '../../domain/contracts/facades';
 import { CoursesDatasourceContract } from '../../domain/contracts/datasources';
+import { NotificationsServiceContract } from '../../domain/contracts/services';
 
 export class CoursesFacade implements CoursesFacadeContract {
     constructor (
         private readonly timeAdapter: TimeAdapterContract,
         private readonly loggerAdapter: LoggerAdapterContract,
-        private readonly coursesDatasource: CoursesDatasourceContract
+        private readonly coursesDatasource: CoursesDatasourceContract,
+        private readonly notificationsService: NotificationsServiceContract
     ) {}
 
-    public async notifyUsersWithPendingLessons(): Promise<void> {
+    public async notifyUsersOfPendingLessons(): Promise<void> {
         try {
             const usersIds = await this.coursesDatasource.getUsersIdsOfCoursesThatHavePendingLessonsNow();
 
@@ -21,8 +23,7 @@ export class CoursesFacade implements CoursesFacadeContract {
                 return;
             }
 
-            // TODO: send notifications
-            // await this.notificationsService.sendCoursesDailyNotification(usersIds);
+            await this.notificationsService.sendCoursesDailyNotification(usersIds);
 
             const hour = this.timeAdapter.nowWithFormat('HH:mm:ss');
             this.loggerAdapter.info(`${ hour } Courses notifications sent.`);
