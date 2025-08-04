@@ -1,1 +1,1 @@
-export * from './notify-users-with-pending-lessons.usecase.contract';
+export * from './notify-users-of-pending-lessons.usecase.contract';
