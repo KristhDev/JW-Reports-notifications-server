@@ -32,6 +32,9 @@ importers:
       express-validator:
         specifier: ^7.1.0
         version: 7.1.0
+      module-alias:
+        specifier: ^2.2.3
+        version: 2.2.3
       winston:
         specifier: ^3.13.0
         version: 3.13.0
@@ -48,6 +51,9 @@ importers:
       '@types/express-useragent':
         specifier: ^1.0.5
         version: 1.0.5
+      '@types/module-alias':
+        specifier: ^2.0.4
+        version: 2.0.4
       '@types/node':
         specifier: ^20.12.12
         version: 20.12.12
@@ -146,6 +152,9 @@ packages:
 
   '@types/mime@3.0.1':
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
+
+  '@types/module-alias@2.0.4':
+    resolution: {integrity: sha512-5+G/QXO/DvHZw60FjvbDzO4JmlD/nG5m2/vVGt25VN1eeP3w2bCoks1Wa7VuptMPM1TxJdx6RjO70N9Fw0nZPA==}
 
   '@types/node@20.12.12':
     resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
@@ -626,6 +635,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  module-alias@2.2.3:
+    resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
+
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
 
@@ -1083,6 +1095,8 @@ snapshots:
       '@types/serve-static': 1.15.1
 
   '@types/mime@3.0.1': {}
+
+  '@types/module-alias@2.0.4': {}
 
   '@types/node@20.12.12':
     dependencies:
@@ -1561,6 +1575,8 @@ snapshots:
   minipass@7.1.2: {}
 
   mkdirp@1.0.4: {}
+
+  module-alias@2.2.3: {}
 
   ms@2.0.0: {}
 
