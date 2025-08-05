@@ -1,4 +1,4 @@
-import { HttpClientAdapterContract, LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
+import { HttpClientAdapterContract, LoggerAdapterContract, TimeAdapterContract, UserAgentAdapterContract } from '@domain/contracts/adapters';
 import { CoursesDatasourceContract, RevisitsDatasourceContract, UsersDatasourceContract } from '@domain/contracts/datasources';
 import { NotificationsServiceContract } from '@domain/contracts/services';
 import { AppFacadeContract, CoursesFacadeContract, PreachingFacadeContract, RevisitsFacadeContract } from '@domain/contracts/facades';
@@ -7,7 +7,7 @@ import { NotifyUsersToSendReportUsecaseContract } from '@domain/contracts/usecas
 import { NotifyUsersOfPendingLessonsUsecaseContract } from '@domain/contracts/usecases/courses';
 import { NotifyUsersOfPendingRevisitsUsecaseContract } from '@domain/contracts/usecases/revisits';
 
-import { HttpClientAdapter, LoggerAdapter, TimeAdapter } from '@infrastructure/adapters';
+import { HttpClientAdapter, LoggerAdapter, TimeAdapter, UserAgentAdapter } from '@infrastructure/adapters';
 import { CoursesDatasource, RevisitsDatasource, UsersDatasource } from '@infrastructure/datasources';
 import { AppFacade, CoursesFacade, PreachingFacade, RevisitsFacade } from '@application/facades';
 import { NotificationsService } from '@infrastructure/services';
@@ -23,7 +23,9 @@ export const loggerAdapter: LoggerAdapterContract = new LoggerAdapter(timeAdapte
     writeLogsInFile: true
 });
 
+
 export const httpClientAdapter: HttpClientAdapterContract = new HttpClientAdapter(loggerAdapter);
+export const userAgentAdapter: UserAgentAdapterContract = new UserAgentAdapter();
 
 export const coursesDatasource: CoursesDatasourceContract = new CoursesDatasource(timeAdapter);
 export const revisitsDatasource: RevisitsDatasourceContract = new RevisitsDatasource(timeAdapter);
