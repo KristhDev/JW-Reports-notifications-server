@@ -8,6 +8,9 @@ import { CoursesDatasourceContract } from '@domain/contracts/datasources';
 /* Errors */
 import { DatasourceError } from '@domain/errors';
 
+/* Interfaces */
+import { LessonWithOnlyCourses } from '@infrastructure/interfaces';
+
 export class CoursesDatasource implements CoursesDatasourceContract {
     constructor(
         private readonly timeAdapter: TimeAdapterContract
@@ -22,7 +25,7 @@ export class CoursesDatasource implements CoursesDatasourceContract {
         const now = this.timeAdapter.nowWithFormat('YYYY-MM-DD');
 
         const { data, error } = await supabase.from('lessons')
-            .select<'courses (user_id)', { courses: { user_id: string } }>('courses (user_id)')
+            .select<'courses (user_id)', LessonWithOnlyCourses>('courses (user_id)')
             .eq('done', false)
             .eq('courses.suspended', false)
             .eq('courses.finished', false)
@@ -35,7 +38,7 @@ export class CoursesDatasource implements CoursesDatasourceContract {
         }
 
         const userIds = new Set(data.map(({ courses }) => 
-            (Array.isArray(courses)) ? courses[0].user_id : courses!.user_id
+            (Array.isArray(courses)) ? courses[0].user_id : courses.user_id
         ));
 
         return Array.from(userIds);

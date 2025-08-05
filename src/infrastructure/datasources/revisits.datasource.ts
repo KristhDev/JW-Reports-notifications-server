@@ -8,6 +8,9 @@ import { RevisitsDatasourceContract } from '@domain/contracts/datasources';
 /* Errors */
 import { DatasourceError } from '@domain/errors';
 
+/* Interfaces */
+import { RevisitWithOnlyUserIdEndpoint } from '@infrastructure/interfaces';
+
 export class RevisitsDatasource implements RevisitsDatasourceContract {
     constructor(
         private readonly timeAdapter: TimeAdapterContract
@@ -22,7 +25,7 @@ export class RevisitsDatasource implements RevisitsDatasourceContract {
         const now = this.timeAdapter.nowWithFormat('YYYY-MM-DD');
 
         const { data, error } = await supabase.from('revisits')
-            .select('user_id')
+            .select<'user_id', RevisitWithOnlyUserIdEndpoint>('user_id')
             .eq('done', false)
             .gte('next_visit', `${ now } 00:00`)
             .lte('next_visit', `${ now } 23:59`);
