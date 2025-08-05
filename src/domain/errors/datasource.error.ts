@@ -6,19 +6,19 @@ export interface DatasourceErrorJson {
 }
 
 export class DatasourceError extends BaseError<DatasourceErrorJson> {
-    public data: { [key: string]: any };
-
-    constructor(message: string, data: { [key: string]: any }) {
+    constructor(
+        message: string,
+        public data: { [key: string]: any }
+    ) {
         super(message);
         this.name = 'DatasourceError';
-        this.data = data;
     }
 
     public toJSON(): DatasourceErrorJson {
         return {
             message: this.message,
             data: this.data,
-        };
+        }
     }
 
     public toString(): string {
