@@ -30,7 +30,12 @@ export class JsonResponseUtil {
      */
     public static badRequest(error: string, res: Response): Response {
         const badRequestError = HttpError.badRequest(error);
-        return res.status(httpStatus.BAD_REQUEST).json(badRequestError.toJSON());
+
+        const data = (badRequestError.toJSON !== undefined)
+            ? badRequestError.toJSON()
+            : { message: badRequestError.message, status: badRequestError.status };
+
+        return res.status(httpStatus.BAD_REQUEST).json(data);
     }
 
     /**
@@ -41,7 +46,12 @@ export class JsonResponseUtil {
      */
     public static notFound(res: Response): Response {
         const notFoundError = HttpError.notFound();
-        return res.status(httpStatus.NOT_FOUND).json(notFoundError.toJSON());
+
+        const data = (notFoundError.toJSON !== undefined)
+            ? notFoundError.toJSON()
+            : { message: notFoundError.message, status: notFoundError.status };
+
+        return res.status(httpStatus.NOT_FOUND).json(data);
     }
 
     /**
@@ -52,6 +62,11 @@ export class JsonResponseUtil {
      */
     public static internalServerError(res: Response): Response {
         const internalServerError = HttpError.internalServerError();
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(internalServerError.toJSON());
+
+        const data = (internalServerError.toJSON !== undefined)
+            ? internalServerError.toJSON()
+            : { message: internalServerError.message, status: internalServerError.status };
+
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(data);
     }
 }
