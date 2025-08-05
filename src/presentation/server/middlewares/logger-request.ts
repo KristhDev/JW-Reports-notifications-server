@@ -11,11 +11,14 @@ import { loggerAdapter } from '@config/di';
  * @returns {void} - The function does not return anything.
  */
 export const loggerRequest = (req: Request, res: Response, next: NextFunction): void => {
-    const userAgent = (req.useragent?.browser !== 'unknown') 
-        ? `${ req.useragent?.browser } ${ req.useragent?.version } ${ req.useragent?.os } ${ req.useragent?.platform }` 
-        : req.useragent?.source;
+    let userAgent = req.useragent?.source;
 
-    loggerAdapter.info(`${ req.method } ${ req.path } IP ${ req.ip } ${ userAgent }`);
+    if (req.useragent?.browser !== 'unknown') userAgent = req.useragent?.browser;
+    if (req.useragent?.browser && req.useragent?.version) userAgent += ` Version ${ req.useragent?.version }`;
+    if (req.useragent?.browser && req.useragent?.os !== 'unknown') userAgent += ` OS ${ req.useragent?.os }`;
+    if (req.useragent?.browser && req.useragent?.platform !== 'unknown') userAgent += ` Platform ${ req.useragent?.platform }`;
+
+    loggerAdapter.info(`${ req.method } ${ req.path } IP ${ req.ip } Agent ${ userAgent }`);
 
     next();
 }
