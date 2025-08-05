@@ -1,15 +1,8 @@
-import dayjs from 'dayjs';
-import dotenv from 'dotenv';
+import 'module-alias/register';
+import './paths';
 
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
+import { loggerAdapter } from '@config/di';
+import { Server } from '@server';
 
-import { Server } from './src/server';
-
-dayjs.extend(timezone);
-dayjs.extend(utc);
-
-dotenv.config();
-
-const server = new Server();
+const server = new Server(loggerAdapter);
 server.listen();

@@ -1,0 +1,1 @@
+export * from './app-new-version.dto';

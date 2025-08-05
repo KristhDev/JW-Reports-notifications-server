@@ -4,30 +4,31 @@
   <a href="https://creativecommons.org/licenses/by/4.0">
     <img alt="License: Attribution 4.0 International" src="https://img.shields.io/badge/License-Attribution%204.0%20International-blue.svg" />
   </a>
-  <a href="https://github.com/KristhDev/ReactTasks-backend/releases/tag/v2.1.2">
-    <img alt="Api Version" src="https://img.shields.io/badge/Version-%202.1.2%20-brightgreen.svg" />
+  <a href="https://github.com/KristhDev/ReactTasks-backend/releases/tag/v3.0.0">
+    <img alt="Api Version" src="https://img.shields.io/badge/Version-%33.0.0%20-brightgreen.svg" />
   </a>
 </p>
 
 <br>
 
 ## Indice
-- [1. Tecnologías](#1-tecnologias)
-  - [1.1. Express](#1.1.-express)
-  - [1.2. Typescript](#1.2.-typescript)
-  - [1.3. Supabase](#1.3.-supabase)
-  - [1.4. OneSignal](#1.4.-onesignal)
-  - [1.5. Enlaces](#1.5.-enlaces)
+- [Indice](#indice)
+- [1. Tecnologías](#1-tecnologías)
+  - [1.1. Express](#11-express)
+  - [1.2. Typescript](#12-typescript)
+  - [1.3. Supabase](#13-supabase)
+  - [1.4. OneSignal](#14-onesignal)
+  - [1.5. Enlaces](#15-enlaces)
 - [2. Entorno de desarrollo](#2-entorno-de-desarrollo)
-  - [2.1. Node.js](#2.1.-nodejs)
-  - [2.2. Pnpm (opcional](#2.2.-pnpm-opcional)
-  - [2.3. Enlaces](#2.3.-enlaces)
-- [3. Correr en desarrrollo](#3-correr-en-desarrollo)
-  - [3.1. Clonar repositorio](#3.1.-clonar-repositorio)
-  - [3.2. Variables de entorno](#3.2.-variables-de-entorno)
-  - [3.3. Instalar dependencias](#3.3.-instalar-dependencias)
-  - [3.4. Correr aplicación](#3.4.-correr-aplicacion)
-  - [3.5. Ejecutar tareas](#3.5.-ejecutar-tareas)
+  - [2.1. Node.js](#21-nodejs)
+  - [2.2. Pnpm (opcional)](#22-pnpm-opcional)
+  - [2.3. Enlaces](#23-enlaces)
+- [3. Correr en desarrollo](#3-correr-en-desarrollo)
+  - [3.1. Clonar repositorio](#31-clonar-repositorio)
+  - [3.2. Variables de entorno](#32-variables-de-entorno)
+  - [3.3. Instalar dependencias](#33-instalar-dependencias)
+  - [3.4. Correr aplicación](#34-correr-aplicación)
+  - [3.5. Ejecutar tareas](#35-ejecutar-tareas)
 
 Este es más que todo un **microservicio para enviar push notifications** a los usuarios que tengan una **sesión
 activa** en la aplicación de JW Reports. Esas notificaciones son para **recordar la entrega del informe, las
@@ -126,13 +127,21 @@ En el repositorio está un **archivo de ejemplo de variables de entorno** `.env.
 cómo `.env`. Luego **reemplaza los valores por los que da Supabase, OneSignal y Logtail.** Recuerda que para ello ya **debes tener una cuenta** en Supabase y haber **creado un proyecto**, además de haber **creado una cuenta en OneSignal** y haber configurado
 la parte de las **notificaciones en Android.**
 
-| ACCESS_TOKEN | SUPABASE_APY_KEY | SUPABASE_URL | ONESIGNAL_APP_ID | ONESIGNAL_REST_API_KEY | PORT |
-|--------------|------------------|--------------|------------------|------------------------|------|
-| Cadena de acceso para realizar las peticiones | Es la clave para hacer las operaciones necesarias con un proyecto de Supabase | Es la url del proyecto de Supabase | ID de la aplicación de OneSignal | Es la clave para usar la rest api de OneSignal | Es el puerto donde estará corriendo el servidor |
+| Variable | Descripción |
+|----------|-------------|
+| ACCESS_TOKEN | Cadena de acceso para realizar las peticiones |
+| SUPABASE_APY_KEY | Es la clave para hacer las operaciones necesarias con un proyecto de Supabase |
+| SUPABASE_URL | Es la url del proyecto de Supabase |
+| ONESIGNAL_API_URL | Es la url de la api de OneSignal |
+| ONESIGNAL_APP_ID | ID de la aplicación de OneSignal |
+| ONESIGNAL_REST_API_KEY | Es la clave para usar la rest api de OneSignal |
+| LOGTAIL_TOKEN | Es el token de Logtail |
+| PORT | Es el puerto donde estará corriendo el servidor |
 
 <a name="3.3.-instalar-dependencias"></a>
 ### 3.3. Instalar dependencias
 Una vez clonado y con las variables de entorno, has un ```cd``` a la **raíz del proyecto** y ejecuta el siguiente comando:
+
 ```shell
 pnpm install
 ```
@@ -142,7 +151,7 @@ pnpm install
 Una vez instaladas las dependencias, ejecuta el siguiente comando:
 
 ```shell
-pnpm start
+pnpm dev
 ```
 
 Y listo, la aplicación ya estará corriendo localmente.
@@ -164,12 +173,12 @@ Luego está otro endpoint para enviar notificaciones de actualizaciones:
 POST /api/notifications/new-version
 ```
 
-Está petición necesita los el siguiente body:
+Está petición necesita el siguiente body:
 
 ```json
 {
-    "version": "La nueva versión de la aplicación",
-    "lauchUrl": "La url de descarga de la nueva versión de la aplicación"
+  "version": "La nueva versión de la aplicación",
+  "lauchUrl": "La url de descarga de la nueva versión de la aplicación"
 }
 ```
 
@@ -180,9 +189,9 @@ aceptar la petición:
 
 ```json
 {
-    "headers": {
-        "Authorization": "Bearer { ACCESS_TOKEN }"
-    }
+  "headers": {
+    "Authorization": "Bearer { ACCESS_TOKEN }"
+  }
 }
 ```
 
@@ -190,8 +199,8 @@ Estos endpoints regresan un json con dos propiedades:
 
 ```json
 {
-    "msg": "Mensaje del estado de la petición",
-    "status": "Código de la respuesta"
+  "messages": "Mensaje del estado de la petición",
+  "status": "Código de la respuesta"
 }
 ```
 
