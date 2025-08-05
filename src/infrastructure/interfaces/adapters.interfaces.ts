@@ -15,3 +15,15 @@ export interface HttpClientOptions {
     headers?: HttpHeaders;
     queryParams?: Record<string, string>;
 }
+
+export interface LoggerOptions {
+    logsDir?: string;
+    logsFileName?: string;
+    renderLogsInConsole?: boolean;
+    uploadLogsToService?: boolean;
+    writeLogsInFile?: boolean;
+}
+
+export interface TimeAdapterOptions {
+    timezone?: string;
+}
