@@ -27,3 +27,10 @@ export interface LoggerOptions {
 export interface TimeAdapterOptions {
     timezone?: string;
 }
+
+export interface UserAgentParsed {
+    browser?: string;
+    device?: string;
+    os?: string;
+    userAgent: string;
+}
