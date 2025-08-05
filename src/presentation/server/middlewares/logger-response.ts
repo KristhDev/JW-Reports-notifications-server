@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { loggerAdapter } from '@config/di';
+/* Dependencies */
+import { loggerAdapter, userAgentAdapter } from '@config/di';
 
 /**
  * Logs the response of an API request.
@@ -11,12 +12,13 @@ import { loggerAdapter } from '@config/di';
  * @return {void} - The function does not return anything.
  */
 export const loggerResponse = (req: Request, res: Response, next: NextFunction): void => {
-    let userAgent = req.useragent?.source;
+    let userAgent = req.headers['user-agent'];
+    const parsedUserAgent = userAgentAdapter.parse(userAgent!);
 
-    if (req.useragent?.browser !== 'unknown') userAgent = req.useragent?.browser;
-    if (req.useragent?.browser && req.useragent?.version) userAgent += ` Version ${ req.useragent?.version }`;
-    if (req.useragent?.browser && req.useragent?.os !== 'unknown') userAgent += ` OS ${ req.useragent?.os }`;
-    if (req.useragent?.browser && req.useragent?.platform !== 'unknown') userAgent += ` Platform ${ req.useragent?.platform }`;
+    if (parsedUserAgent.browser) userAgent = parsedUserAgent.browser;
+    if (parsedUserAgent.os) userAgent += ` OS ${ parsedUserAgent.os }`;
+    if (parsedUserAgent.device) userAgent += ` Device ${ parsedUserAgent.device }`;
+    if (!parsedUserAgent.browser && !parsedUserAgent.device && !parsedUserAgent.os) userAgent = parsedUserAgent.userAgent;
 
     const originalSend = res.send;
 
