@@ -16,8 +16,13 @@ import { NotifyUsersToSendReportUseCase } from '@application/usecases/preaching'
 import { NotifyUsersOfPendingLessonsUseCase } from '@application/usecases/courses';
 import { NotifyUsersOfPendingRevisitsUsecase } from '@application/usecases/revisits';
 
-export const timeAdapter: TimeAdapterContract = new TimeAdapter();
-export const loggerAdapter: LoggerAdapterContract = new LoggerAdapter();
+export const timeAdapter: TimeAdapterContract = new TimeAdapter({ timezone: 'America/Managua' });
+
+export const loggerAdapter: LoggerAdapterContract = new LoggerAdapter(timeAdapter, {
+    renderLogsInConsole: true,
+    writeLogsInFile: true
+});
+
 export const httpClientAdapter: HttpClientAdapterContract = new HttpClientAdapter(loggerAdapter);
 
 export const coursesDatasource: CoursesDatasourceContract = new CoursesDatasource(timeAdapter);
