@@ -1,5 +1,4 @@
 import express, { Application } from 'express';
-import useragent from 'express-useragent';
 import cors from 'cors';
 
 /* Environment */
@@ -31,9 +30,11 @@ class Server {
      * - cors: handles Cross-Origin Resource Sharing
      * - express.json: parses incoming JSON requests
      * - authCheck: handles authentication checks
+     *
+     * @private
+     * @return {void} - No return value
      */
     private middlewares(): void {
-        this.app.use(useragent.express());
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(loggerRequest);
@@ -45,7 +46,7 @@ class Server {
      * Defines the routes for the application.
      *
      * @private
-     * @returns {void} - No return value
+     * @return {void} - No return value
      */
     private routes(): void {
         this.app.use('/api/notifications', notificationsRouter);
