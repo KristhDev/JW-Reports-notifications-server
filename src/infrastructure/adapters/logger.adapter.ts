@@ -1,42 +1,63 @@
-import { addColors, createLogger, format, transports, Logform } from 'winston';
+import { addColors, createLogger, format, Logform, Logger, LoggerOptions as WinstonLoggerOptions, transports as WinstonTransports } from 'winston';
+import { Logtail } from '@logtail/node';
+import { LogtailTransport } from '@logtail/winston';
 import timestampColorize from 'winston-timestamp-colorize';
 
-import { LoggerAdapterContract } from '@domain/contracts/adapters';
+import { env } from '@config/env';
 
-/**
- * An object that contains color codes for different log levels.
- */
-const colorLevels = {
-    error: 'red',
-    warn: 'yellow',
-    info: 'cyan',
-    success: 'green',
-    http: 'magenta',
-    verbose: 'cyan',
-    debug: 'white',
-    silly: 'grey'
-}
+import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
 
-/**
- * An object that defines custom log levels with their respective levels and colors.
- */
-const customLevels = {
-    colors: colorLevels,
-    levels: {
-        error: 0,
-        warn: 1,
-        success: 2,
-        info: 3,
-        http: 4,
-        verbose: 5,
-        debug: 6,
-        silly: 7
-    }
-}
-
-addColors(customLevels.colors);
+import { LoggerOptions } from '@infrastructure/interfaces';
 
 export class LoggerAdapter implements LoggerAdapterContract {
+    private readonly colorLevels = {
+        error: 'red',
+        warn: 'yellow',
+        info: 'cyan',
+        success: 'green',
+        http: 'magenta',
+        verbose: 'cyan',
+        debug: 'white',
+        silly: 'grey'
+    }
+
+    private readonly customLevels = {
+        colors: this.colorLevels,
+        levels: {
+            error: 0,
+            warn: 1,
+            success: 2,
+            info: 3,
+            http: 4,
+            verbose: 5,
+            debug: 6,
+            silly: 7
+        }
+    }
+
+    private readonly logger: Logger;
+    private readonly logtail: Logtail;
+
+    private readonly options: LoggerOptions;
+    private readonly defaultOptions: LoggerOptions = {
+        logsDir: './logs',
+        logsFileName: `jw-reports-notifications-server-${ this.loggerFormatDate(new Date()) }`,
+        renderLogsInConsole: true,
+        uploadLogsToService: false,
+        writeLogsInFile: true,
+    }
+
+    constructor(
+        private readonly timeAdapter: TimeAdapterContract,
+        options?: LoggerOptions
+    ) {
+        this.options = { ...this.defaultOptions, ...options };
+        addColors(this.customLevels.colors);
+
+        this.logtail = new Logtail(env.LOGTAIL_TOKEN);
+        this.logger = this.generateWinstonLogger();
+    }
+
     /**
      * Formats the given date into a string with the format 'dd-mm-yyyy'.
      *
@@ -44,18 +65,12 @@ export class LoggerAdapter implements LoggerAdapterContract {
      * @return {string} The formatted date string.
      */
     private loggerFormatDate (date: Date): string {
-        return date.toLocaleString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        })
-        .replace(/\//g, '-');
+        return this.timeAdapter.format(date, 'DD-MM-YYYY');
     }
 
     /**
      * A Winston format that converts log levels to uppercase.
      *
-     * @param {object} info - The log entry.
      * @return {Logform.Format} The log entry with the level converted to uppercase.
      */
     private levelFormat(): Logform.Format {
@@ -68,7 +83,6 @@ export class LoggerAdapter implements LoggerAdapterContract {
     /**
      * A Winston format that formats the log message.
      *
-     * @param {object} info - The log entry.
      * @return {Logform.Format} The formatted log message.
      */
     private messageFormat(): Logform.Format { 
@@ -107,20 +121,35 @@ export class LoggerAdapter implements LoggerAdapterContract {
     }
 
     /**
-     * A winston logger object that logs messages to the console and a log file.
+     * Creates a Winston logger instance with the specified options.
+     *
+     * @return {Logger} The Winston logger instance.
      */
-    private log = createLogger({
-        levels: customLevels.levels,
-        transports: [
-            new transports.Console({
+    private generateWinstonLogger(): Logger {
+        const transports: WinstonLoggerOptions['transports'] = [];
+
+        if (this.options.renderLogsInConsole) {
+            transports.push(new WinstonTransports.Console({
                 format: this.consoleLoggerFormat()
-            }),
-            new transports.File({
-                filename: `./logs/jw-reports-notifications-server-${ this.loggerFormatDate(new Date()) }.log`,
+            }));
+        }
+
+        if (this.options.uploadLogsToService) {
+            transports.push(new LogtailTransport(this.logtail));
+        }
+
+        if (this.options.writeLogsInFile) {
+            transports.push(new WinstonTransports.File({
+                filename: `${ this.options.logsDir }/${ this.options.logsFileName }.log`,
                 format: this.fileLoggerFormat()
-            }),
-        ],
-    });
+            }));
+        }
+
+        return createLogger({
+            levels: this.customLevels.levels,
+            transports
+        });
+    }
 
     /**
      * Logs an informational message.
@@ -129,7 +158,8 @@ export class LoggerAdapter implements LoggerAdapterContract {
      * @return {void} This function does not return a value.
      */
     public info(message: string): void {
-        this.log.info(message);
+        this.logger.info(message);
+        if (this.options.uploadLogsToService) this.logtail.flush();
     }
 
     /**
@@ -139,7 +169,8 @@ export class LoggerAdapter implements LoggerAdapterContract {
      * @return {void} This function does not return a value.
      */
     public success(message: string): void {
-        this.log.log('success', message);
+        this.logger.log('success', message);
+        if (this.options.uploadLogsToService) this.logtail.flush();
     }
 
     
@@ -150,6 +181,7 @@ export class LoggerAdapter implements LoggerAdapterContract {
      * @return {void} 
      */
     public error(message: string): void {
-        this.log.error(message);
+        this.logger.error(message);
+        if (this.options.uploadLogsToService) this.logtail.flush();
     }
 }
