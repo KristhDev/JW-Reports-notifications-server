@@ -8,19 +8,16 @@ export interface HttpErrorJson {
 }
 
 export class HttpError extends BaseError<HttpErrorJson> {
-    public status: number;
-
-    constructor(message: string, status: number) {
+    constructor(message: string, public status: number) {
         super(message);
         this.name = 'HttpError';
-        this.status = status;
     }
 
     public toJSON(): HttpErrorJson {
         return {
             message: this.message,
-            status: this.status,
-        };
+            status: this.status
+        }
     }
 
     public toString(): string {
