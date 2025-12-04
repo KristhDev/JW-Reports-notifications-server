@@ -20,7 +20,7 @@ export const timeAdapter: TimeAdapterContract = new TimeAdapter({ timezone: 'Ame
 
 export const loggerAdapter: LoggerAdapterContract = new LoggerAdapter(timeAdapter, {
     renderLogsInConsole: true,
-    writeLogsInFile: true
+    writeLogsInFile: false
 });
 
 export const httpClientAdapter: HttpClientAdapterContract = new HttpClientAdapter(loggerAdapter);
