@@ -2,12 +2,12 @@
 import { supabase } from '@config/supabase';
 
 /* Contracts */
-import { UsersDatasourceContract } from '@domain/contracts/datasources';
+import { UsersDataSourceContract } from '@domain/contracts/datasources';
 
 /* Errors */
-import { DatasourceError } from '@domain/errors';
+import { DataSourceError } from '@domain/errors';
 
-export class UsersDatasource implements UsersDatasourceContract {
+export class UsersDataSource implements UsersDataSourceContract {
 
     /**
      * Gets the IDs of all users in the app.
@@ -19,7 +19,7 @@ export class UsersDatasource implements UsersDatasourceContract {
 
         if (error) {
             const errorData = { name: error.name, code: error.code, message: error.message };
-            throw new DatasourceError(errorData.message, errorData);
+            throw new DataSourceError(errorData.message, errorData);
         }
 
         return data.users.map(user => user.id);

@@ -3,15 +3,15 @@ import { supabase } from '@config/supabase';
 
 /* Contracts */
 import { TimeAdapterContract } from '@domain/contracts/adapters';
-import { CoursesDatasourceContract } from '@domain/contracts/datasources';
+import { CoursesDataSourceContract } from '@domain/contracts/datasources';
 
 /* Errors */
-import { DatasourceError } from '@domain/errors';
+import { DataSourceError } from '@domain/errors';
 
 /* Interfaces */
 import { LessonWithOnlyCourses } from '@infrastructure/interfaces';
 
-export class CoursesDatasource implements CoursesDatasourceContract {
+export class CoursesDataSource implements CoursesDataSourceContract {
     constructor(
         private readonly timeAdapter: TimeAdapterContract
     ) {}
@@ -34,7 +34,7 @@ export class CoursesDatasource implements CoursesDatasourceContract {
 
         if (error) {
             const errorData = { code: error.code, details: error.details, hint: error.hint, message: error.message };
-            throw new DatasourceError(error.message, errorData);
+            throw new DataSourceError(error.message, errorData);
         }
 
         const userIds = new Set(data.map(({ courses }) => 
