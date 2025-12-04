@@ -1,5 +1,6 @@
 import { httpStatus } from '@application/constants';
 
+/* Errors */
 import { BaseError } from './base.error';
 
 export interface HttpErrorJson {
@@ -8,7 +9,7 @@ export interface HttpErrorJson {
 }
 
 export class HttpError extends BaseError<HttpErrorJson> {
-    constructor(message: string, public status: number) {
+    public constructor(message: string, public status: number) {
         super(message);
         this.name = 'HttpError';
     }

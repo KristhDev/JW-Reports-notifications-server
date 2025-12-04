@@ -1,3 +1,3 @@
-export abstract class CoursesDatasourceContract {
+export abstract class CoursesDataSourceContract {
     public abstract getUsersIdsOfCoursesThatHavePendingLessonsNow(): Promise<string[]>;
 }

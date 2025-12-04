@@ -1,17 +1,17 @@
 /* Contracts */
 import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
 import { CoursesFacadeContract } from '@domain/contracts/facades';
-import { CoursesDatasourceContract } from '@domain/contracts/datasources';
+import { CoursesDataSourceContract } from '@domain/contracts/datasources';
 import { NotificationsServiceContract } from '@domain/contracts/services';
 
 /* Errors */
-import { BaseError, DatasourceError, HttpError } from '@domain/errors';
+import { BaseError, DataSourceError, HttpError } from '@domain/errors';
 
 export class CoursesFacade implements CoursesFacadeContract {
     constructor (
         private readonly timeAdapter: TimeAdapterContract,
         private readonly loggerAdapter: LoggerAdapterContract,
-        private readonly coursesDatasource: CoursesDatasourceContract,
+        private readonly coursesDataSource: CoursesDataSourceContract,
         private readonly notificationsService: NotificationsServiceContract
     ) {}
 
@@ -22,7 +22,7 @@ export class CoursesFacade implements CoursesFacadeContract {
      */
     public async notifyUsersOfPendingLessons(): Promise<void> {
         try {
-            const usersIds = await this.coursesDatasource.getUsersIdsOfCoursesThatHavePendingLessonsNow();
+            const usersIds = await this.coursesDataSource.getUsersIdsOfCoursesThatHavePendingLessonsNow();
 
             if (usersIds.length === 0) {
                 const hour = this.timeAdapter.nowWithFormat('HH:mm:ss');
@@ -41,7 +41,7 @@ export class CoursesFacade implements CoursesFacadeContract {
             let errorToThrow = error;
 
             if (error instanceof BaseError) this.loggerAdapter.error(`${ hour } ${ error.toString() }`);
-            if (error instanceof DatasourceError) errorToThrow = HttpError.internalServerError();
+            if (error instanceof DataSourceError) errorToThrow = HttpError.internalServerError();
 
             throw errorToThrow;
         }

@@ -5,15 +5,17 @@ import { NotifyUsersOfPendingLessonsUsecaseContract } from '@domain/contracts/us
 import { NotifyUsersOfPendingRevisitsUsecaseContract } from '@domain/contracts/usecases/revisits';
 import { NotifyUsersToSendReportUsecaseContract } from '@domain/contracts/usecases/preaching';
 
-/* Utils */
-import { JsonResponseUtil } from '@server/utils';
+/* Controllers */
+import { BaseController } from '@server/controllers';
 
-export class DailyNotificationsController {
+export class DailyNotificationsController extends BaseController {
     constructor(
         private readonly notifyUsersToSendReportUsecase: NotifyUsersToSendReportUsecaseContract,
         private readonly notifyUsersOfPendingRevisitsUsecase: NotifyUsersOfPendingRevisitsUsecaseContract,
         private readonly notifyUsersOfPendingLessonsUsecase: NotifyUsersOfPendingLessonsUsecaseContract,
-    ) {}
+    ) {
+        super();
+    }
 
     /**
      * Send all daily notifications.
@@ -29,10 +31,10 @@ export class DailyNotificationsController {
             await this.notifyUsersOfPendingRevisitsUsecase.execute();
             await this.notifyUsersOfPendingLessonsUsecase.execute();
 
-            JsonResponseUtil.success(res, 'Notifications sent successfully');
+            this.jsonResponse.success(res, { message: 'Notifications sent successfully' });
         } 
         catch (error) {
-            JsonResponseUtil.internalServerError(res);
+            this.jsonResponse.internalServerError(res);
         }
     }
 }

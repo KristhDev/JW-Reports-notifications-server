@@ -1,1 +1,1 @@
-export * from './auth-check';
+export * from './verify-access-token.middleware';

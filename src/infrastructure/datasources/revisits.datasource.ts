@@ -3,15 +3,15 @@ import { supabase } from '@config/supabase';
 
 /* Contracts */
 import { TimeAdapterContract } from '@domain/contracts/adapters';
-import { RevisitsDatasourceContract } from '@domain/contracts/datasources';
+import { RevisitsDataSourceContract } from '@domain/contracts/datasources';
 
 /* Errors */
-import { DatasourceError } from '@domain/errors';
+import { DataSourceError } from '@domain/errors';
 
 /* Interfaces */
 import { RevisitWithOnlyUserIdEndpoint } from '@infrastructure/interfaces';
 
-export class RevisitsDatasource implements RevisitsDatasourceContract {
+export class RevisitsDataSource implements RevisitsDataSourceContract {
     constructor(
         private readonly timeAdapter: TimeAdapterContract
     ) {}
@@ -32,7 +32,7 @@ export class RevisitsDatasource implements RevisitsDatasourceContract {
 
         if (error) {
             const errorData = { code: error.code, details: error.details, hint: error.hint, message: error.message };
-            throw new DatasourceError(error.message, errorData);
+            throw new DataSourceError(error.message, errorData);
         }
 
         const userIds = new Set(data.map(({ user_id }) => user_id));

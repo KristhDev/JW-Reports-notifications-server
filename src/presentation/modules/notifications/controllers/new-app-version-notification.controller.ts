@@ -6,13 +6,15 @@ import { AppNewVersionDto } from '@domain/dtos/app';
 /* Contracts */
 import { NotifyUsersWithNewAppVersionUsecaseContract } from '@domain/contracts/usecases/app';
 
-/* Utils */
-import { JsonResponseUtil } from '@server/utils';
+/* Controllers */
+import { BaseController } from '@server/controllers';
 
-export class NewAppVersionNotificationController {
+export class NewAppVersionNotificationController extends BaseController {
     constructor(
         private readonly notifyUsersWithNewAppVersionUsecase: NotifyUsersWithNewAppVersionUsecaseContract,
-    ) {}
+    ) {
+        super();
+    }
 
     /**
      * Handles the request to send a new app version notification.
@@ -26,10 +28,10 @@ export class NewAppVersionNotificationController {
             const dto = AppNewVersionDto.fromRequest(req.body);
             await this.notifyUsersWithNewAppVersionUsecase.execute(dto);
 
-            JsonResponseUtil.success(res, 'New app version notification sent successfully');
+            this.jsonResponse.success(res, { message: 'New app version notification sent successfully' });
         } 
         catch (error) {
-            JsonResponseUtil.internalServerError(res);
+            this.jsonResponse.internalServerError(res);
         }
     }
 }
