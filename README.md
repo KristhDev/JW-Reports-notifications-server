@@ -129,14 +129,15 @@ la parte de las **notificaciones en Android.**
 
 | Variable | Descripción |
 |----------|-------------|
-| ACCESS_TOKEN | Cadena de acceso para realizar las peticiones |
+| APP_ACCESS_TOKEN | Cadena de acceso para realizar las peticiones |
+| APP_PORT | Puerto en el que corre la aplicación |
+| LOGTAIL_SOURCE_TOKEN | Es el token del source de Logtail |
+| LOGTAIL_SOURCE_URL | Es la url del source de Logtail |
 | SUPABASE_APY_KEY | Es la clave para hacer las operaciones necesarias con un proyecto de Supabase |
 | SUPABASE_URL | Es la url del proyecto de Supabase |
 | ONESIGNAL_API_URL | Es la url de la api de OneSignal |
 | ONESIGNAL_APP_ID | ID de la aplicación de OneSignal |
 | ONESIGNAL_REST_API_KEY | Es la clave para usar la rest api de OneSignal |
-| LOGTAIL_TOKEN | Es el token de Logtail |
-| PORT | Es el puerto donde estará corriendo el servidor |
 
 <a name="3.3.-instalar-dependencias"></a>
 ### 3.3. Instalar dependencias
@@ -184,13 +185,13 @@ Está petición necesita el siguiente body:
 
 <br>
 
-A estos endpoints se le debe enviar el **header** de ```Authorization Berear``` para
+A estos endpoints se le debe enviar el **header** de ```X-ACCESS-TOKEN``` para
 aceptar la petición:
 
 ```json
 {
   "headers": {
-    "Authorization": "Bearer { ACCESS_TOKEN }"
+    "X-ACCESS-TOKEN": "{ APP_ACCESS_TOKEN }"
   }
 }
 ```
