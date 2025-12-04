@@ -8,14 +8,15 @@ import { env } from '@config/env';
 import { LoggerAdapterContract } from '@domain/contracts/adapters';
 
 /* Middlewares */
-import { authCheck } from '@auth/middlewares';
-import { loggerRequest, loggerResponse } from './middlewares';
+import { VerifyCronToken } from '@crons/middlewares';
+import { LogRequestsMiddleware } from './middlewares/logs';
+import { ValidateRequestMiddleware } from './middlewares/validations';
 
 /* Routes */
 import { notificationsRouter } from '@notifications/routes';
 
 class Server {
-    private port: number = Number(env.PORT || 9000);
+    private port: number = Number(env.APP_PORT || 9000);
     private app: Application = express();
 
     constructor(
@@ -35,11 +36,15 @@ class Server {
      * @return {void} - No return value
      */
     private middlewares(): void {
+        const verifyCronToken = new VerifyCronToken();
+        const logRequestsMiddleware = new LogRequestsMiddleware(this.loggerAdapter);
+        const validateRequestMiddleware = new ValidateRequestMiddleware();
+
         this.app.use(cors());
         this.app.use(express.json());
-        this.app.use(loggerRequest);
-        this.app.use(loggerResponse);
-        this.app.use(authCheck);
+        this.app.use((req, res, next) => logRequestsMiddleware.handle(req, res, next));
+        this.app.use((req, res, next) => validateRequestMiddleware.handle(req, res, next));
+        this.app.use((req, res, next) => verifyCronToken.handle(req, res, next));
     }
 
     /**
