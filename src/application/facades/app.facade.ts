@@ -1,6 +1,6 @@
 /* Contracts */
 import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
-import { UsersDatasourceContract } from '@domain/contracts/datasources';
+import { UsersDataSourceContract } from '@domain/contracts/datasources';
 import { AppFacadeContract } from '@domain/contracts/facades';
 import { NotificationsServiceContract } from '@domain/contracts/services';
 
@@ -8,13 +8,13 @@ import { NotificationsServiceContract } from '@domain/contracts/services';
 import { AppNewVersionDto } from '@domain/dtos/app';
 
 /* Errors */
-import { BaseError, DatasourceError, HttpError } from '@domain/errors';
+import { BaseError, DataSourceError, HttpError } from '@domain/errors';
 
 export class AppFacade implements AppFacadeContract {
     constructor (
         private readonly timeAdapter: TimeAdapterContract,
         private readonly loggerAdapter: LoggerAdapterContract,
-        private readonly usersDatasource: UsersDatasourceContract,
+        private readonly usersDataSource: UsersDataSourceContract,
         private readonly notificationsService: NotificationsServiceContract
     ) {}
 
@@ -26,7 +26,7 @@ export class AppFacade implements AppFacadeContract {
      */
     public async notifyNewVersion(appNewVersionDto: AppNewVersionDto): Promise<void> {
         try {
-            const usersIds = await this.usersDatasource.getAllUsersIds();
+            const usersIds = await this.usersDataSource.getAllUsersIds();
 
             await this.notificationsService.sendNewAppVersionNotification({
                 usersIds,
@@ -42,7 +42,7 @@ export class AppFacade implements AppFacadeContract {
             let errorToThrow = error;
 
             if (error instanceof BaseError) this.loggerAdapter.error(`${ hour } ${ error.toString() }`);
-            if (error instanceof DatasourceError) errorToThrow = HttpError.internalServerError();
+            if (error instanceof DataSourceError) errorToThrow = HttpError.internalServerError();
 
             throw errorToThrow;
         }
