@@ -1,7 +1,7 @@
 {
   "name": "jw-reports-notifications-server",
   "version": "3.1.0",
-  "description": "",
+  "description": "The server responsible for sending notifications related to JW Reports.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +12,6 @@
   "keywords": [],
   "author": "KristhDev",
   "license": "CC-BY 4.0",
-  "packageManager": "pnpm@10.22.0",
   "dependencies": {
     "@logtail/node": "^0.5.6",
     "@logtail/winston": "^0.5.6",
