@@ -3,10 +3,13 @@ import { Logtail } from '@logtail/node';
 import { LogtailTransport } from '@logtail/winston';
 import timestampColorize from 'winston-timestamp-colorize';
 
+/* Config */
 import { env } from '@config/env';
 
+/* Contracts */
 import { LoggerAdapterContract, TimeAdapterContract } from '@domain/contracts/adapters';
 
+/* Interfaces */
 import { LoggerOptions } from '@infrastructure/interfaces';
 
 export class LoggerAdapter implements LoggerAdapterContract {
@@ -39,23 +42,33 @@ export class LoggerAdapter implements LoggerAdapterContract {
     private readonly logtail: Logtail;
 
     private readonly options: LoggerOptions;
-    private readonly defaultOptions: LoggerOptions = {
-        logsDir: './logs',
-        logsFileName: `jw-reports-notifications-server-${ this.loggerFormatDate(new Date()) }`,
-        renderLogsInConsole: true,
-        uploadLogsToService: false,
-        writeLogsInFile: true,
-    }
 
     constructor(
         private readonly timeAdapter: TimeAdapterContract,
         options?: LoggerOptions
     ) {
-        this.options = { ...this.defaultOptions, ...options };
+        const defaultOptions = this.generateDefaultOptions();
+        this.options = { ...defaultOptions, ...options };
+
         addColors(this.customLevels.colors);
 
-        this.logtail = new Logtail(env.LOGTAIL_TOKEN);
+        this.logtail = new Logtail(env.LOGTAIL_SOURCE_TOKEN, { endpoint: env.LOGTAIL_SOURCE_URL });
         this.logger = this.generateWinstonLogger();
+    }
+
+    /**
+     * Generates the default options for the logger.
+     *
+     * @return {LoggerOptions} The default options for the logger.
+     */
+    private generateDefaultOptions(): LoggerOptions {
+        return {
+            logsDir: './logs',
+            logsFileName: `jw-reports-notifications-server-${ this.loggerFormatDate(new Date()) }`,
+            renderLogsInConsole: true,
+            uploadLogsToService: false,
+            writeLogsInFile: true
+        }
     }
 
     /**
@@ -155,9 +168,12 @@ export class LoggerAdapter implements LoggerAdapterContract {
      * Logs an informational message.
      *
      * @param {string} message - The message to be logged.
+     * @param {Object} context - The context to be logged.
      * @return {void} This function does not return a value.
      */
-    public info(message: string): void {
+    public info(message: string, context?: { [key: string]: any }): void {
+        message = context ? `${ message } ${ JSON.stringify(context) }` : message;
+
         this.logger.info(message);
         if (this.options.uploadLogsToService) this.logtail.flush();
     }
@@ -166,21 +182,26 @@ export class LoggerAdapter implements LoggerAdapterContract {
      * Logs a success message.
      *
      * @param {string} message - The success message to log.
+     * @param {Object} context - The context to be logged.
      * @return {void} This function does not return a value.
      */
-    public success(message: string): void {
+    public success(message: string, context?: { [key: string]: any }): void {
+        message = context ? `${ message } ${ JSON.stringify(context) }` : message;
+
         this.logger.log('success', message);
         if (this.options.uploadLogsToService) this.logtail.flush();
     }
 
-    
     /**
      * Logs an error message.
      *
      * @param {string} message - The error message to be logged.
+     * @param {Object} context - The context to be logged.
      * @return {void} 
      */
-    public error(message: string): void {
+    public error(message: string, context?: { [key: string]: any }): void {
+        message = context ? `${ message } ${ JSON.stringify(context) }` : message;
+
         this.logger.error(message);
         if (this.options.uploadLogsToService) this.logtail.flush();
     }
