@@ -6,13 +6,13 @@ import { env } from '@config/env';
 /* Middleware */
 import { BaseMiddleware } from '@server/middlewares';
 
-export class VerifyCronToken extends BaseMiddleware {
+export class VerifyAccessToken extends BaseMiddleware {
     public constructor() {
         super();
     }
 
     /**
-     * Validates the cron token in the request headers.
+     * Validates the access token in the request headers.
      *
      * @param {Request} req - the request object to validate
      * @param {Response} res - the response object to send if the request is invalid
@@ -20,10 +20,10 @@ export class VerifyCronToken extends BaseMiddleware {
      * @return {void} - a response object if the request is invalid, otherwise void
      */
     public handle(req: Request, res: Response, next: NextFunction): void {
-        const tokenHeader = req.headers['x-cron-token']?.toString() || '';
+        const tokenHeader = req.headers['x-access-token']?.toString() || '';
         if (!tokenHeader) return this.jsonResponse.notFound(res);
 
-        const isValidToken = tokenHeader === env.APP_CRON_TOKEN;
+        const isValidToken = tokenHeader === env.APP_ACCESS_TOKEN;
         if (!isValidToken) return this.jsonResponse.notFound(res);
 
         next();
