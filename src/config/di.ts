@@ -1,5 +1,5 @@
 import { HttpClientAdapterContract, LoggerAdapterContract, TimeAdapterContract, UserAgentAdapterContract } from '@domain/contracts/adapters';
-import { CoursesDatasourceContract, RevisitsDatasourceContract, UsersDatasourceContract } from '@domain/contracts/datasources';
+import { CoursesDataSourceContract, RevisitsDataSourceContract, UsersDataSourceContract } from '@domain/contracts/datasources';
 import { NotificationsServiceContract } from '@domain/contracts/services';
 import { AppFacadeContract, CoursesFacadeContract, PreachingFacadeContract, RevisitsFacadeContract } from '@domain/contracts/facades';
 import { NotifyUsersWithNewAppVersionUsecaseContract } from '@domain/contracts/usecases/app';
@@ -8,7 +8,7 @@ import { NotifyUsersOfPendingLessonsUsecaseContract } from '@domain/contracts/us
 import { NotifyUsersOfPendingRevisitsUsecaseContract } from '@domain/contracts/usecases/revisits';
 
 import { HttpClientAdapter, LoggerAdapter, TimeAdapter, UserAgentAdapter } from '@infrastructure/adapters';
-import { CoursesDatasource, RevisitsDatasource, UsersDatasource } from '@infrastructure/datasources';
+import { CoursesDataSource, RevisitsDataSource, UsersDataSource } from '@infrastructure/datasources';
 import { AppFacade, CoursesFacade, PreachingFacade, RevisitsFacade } from '@application/facades';
 import { NotificationsService } from '@infrastructure/services';
 import { NotifyUsersWithNewAppVersionUseCase } from '@application/usecases/app';
@@ -23,13 +23,12 @@ export const loggerAdapter: LoggerAdapterContract = new LoggerAdapter(timeAdapte
     writeLogsInFile: true
 });
 
-
 export const httpClientAdapter: HttpClientAdapterContract = new HttpClientAdapter(loggerAdapter);
 export const userAgentAdapter: UserAgentAdapterContract = new UserAgentAdapter();
 
-export const coursesDatasource: CoursesDatasourceContract = new CoursesDatasource(timeAdapter);
-export const revisitsDatasource: RevisitsDatasourceContract = new RevisitsDatasource(timeAdapter);
-export const usersDatasource: UsersDatasourceContract = new UsersDatasource();
+export const coursesDatasource: CoursesDataSourceContract = new CoursesDataSource(timeAdapter);
+export const revisitsDatasource: RevisitsDataSourceContract = new RevisitsDataSource(timeAdapter);
+export const usersDatasource: UsersDataSourceContract = new UsersDataSource();
 
 export const notificationsService: NotificationsServiceContract = new NotificationsService(httpClientAdapter);
 
