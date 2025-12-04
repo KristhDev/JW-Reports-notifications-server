@@ -2,8 +2,8 @@
     "compilerOptions": {
         "paths": {
             "@application/*": [ "./src/application/*" ],
+            "@auth/*": [ "./src/presentation/modules/auth/*" ],
             "@config/*": [ "./src/config/*" ],
-            "@crons/*": [ "./src/presentation/modules/crons/*" ],
             "@domain/*": [ "./src/domain/*" ],
             "@infrastructure/*": [ "./src/infrastructure/*" ],
             "@notifications/*": [ "./src/presentation/modules/notifications/*" ],
