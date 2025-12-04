@@ -1,13 +1,19 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import { get } from 'env-var';
+
+dotenv.config({ quiet: true });
 
 export const env = {
-    ACCESS_TOKEN: process.env.ACCESS_TOKEN!,
-    LOGTAIL_TOKEN: process.env.LOGTAIL_TOKEN!,
-    ONESIGNAL_API_URL: process.env.ONESIGNAL_API_URL!,
-    ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID!,
-    ONESIGNAL_REST_API_KEY: process.env.ONESIGNAL_REST_API_KEY!,
-    PORT: process.env.PORT!,
-    SUPABASE_APY_KEY: process.env.SUPABASE_APY_KEY!,
-    SUPABASE_URL: process.env.SUPABASE_URL!,
+    APP_CRON_TOKEN: get('APP_CRON_TOKEN').required().asString(),
+    APP_PORT: get('APP_PORT').required().asPortNumber(),
+
+    LOGTAIL_SOURCE_TOKEN: get('LOGTAIL_SOURCE_TOKEN').required().asString(),
+    LOGTAIL_SOURCE_URL: get('LOGTAIL_SOURCE_URL').required().asString(),
+
+    ONESIGNAL_API_URL: get('ONESIGNAL_API_URL').required().asString(),
+    ONESIGNAL_APP_ID: get('ONESIGNAL_APP_ID').required().asString(),
+    ONESIGNAL_REST_API_KEY: get('ONESIGNAL_REST_API_KEY').required().asString(),
+
+    SUPABASE_APY_KEY: get('SUPABASE_APY_KEY').required().asString(),
+    SUPABASE_URL: get('SUPABASE_URL').required().asString(),
 }
