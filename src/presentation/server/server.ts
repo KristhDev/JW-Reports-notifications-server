@@ -8,7 +8,7 @@ import { env } from '@config/env';
 import { LoggerAdapterContract } from '@domain/contracts/adapters';
 
 /* Middlewares */
-import { VerifyCronToken } from '@crons/middlewares';
+import { VerifyAccessToken } from '@auth/middlewares';
 import { LogRequestsMiddleware } from './middlewares/logs';
 import { ValidateRequestMiddleware } from './middlewares/validations';
 
@@ -36,7 +36,7 @@ class Server {
      * @return {void} - No return value
      */
     private middlewares(): void {
-        const verifyCronToken = new VerifyCronToken();
+        const verifyAccessToken = new VerifyAccessToken();
         const logRequestsMiddleware = new LogRequestsMiddleware(this.loggerAdapter);
         const validateRequestMiddleware = new ValidateRequestMiddleware();
 
@@ -44,7 +44,7 @@ class Server {
         this.app.use(express.json());
         this.app.use((req, res, next) => logRequestsMiddleware.handle(req, res, next));
         this.app.use((req, res, next) => validateRequestMiddleware.handle(req, res, next));
-        this.app.use((req, res, next) => verifyCronToken.handle(req, res, next));
+        this.app.use((req, res, next) => verifyAccessToken.handle(req, res, next));
     }
 
     /**
