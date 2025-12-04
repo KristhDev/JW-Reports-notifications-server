@@ -1,15 +1,14 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
         "paths": {
-            "@application/*": [ "src/application/*" ],
-            "@auth/*": [ "src/presentation/modules/auth/*" ],
-            "@config/*": [ "src/config/*" ],
-            "@domain/*": [ "src/domain/*" ],
-            "@infrastructure/*": [ "src/infrastructure/*" ],
-            "@notifications/*": [ "src/presentation/modules/notifications/*" ],
-            "@server": [ "src/presentation/server" ],
-            "@server/*": [ "src/presentation/server/*" ]
+            "@application/*": [ "./src/application/*" ],
+            "@config/*": [ "./src/config/*" ],
+            "@crons/*": [ "./src/presentation/modules/crons/*" ],
+            "@domain/*": [ "./src/domain/*" ],
+            "@infrastructure/*": [ "./src/infrastructure/*" ],
+            "@notifications/*": [ "./src/presentation/modules/notifications/*" ],
+            "@server": [ "./src/presentation/server" ],
+            "@server/*": [ "./src/presentation/server/*" ]
         }    
     }
 }
