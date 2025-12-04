@@ -1,3 +1,3 @@
-export abstract class UsersDatasourceContract {
+export abstract class UsersDataSourceContract {
     public abstract getAllUsersIds(): Promise<string[]>;
 }
