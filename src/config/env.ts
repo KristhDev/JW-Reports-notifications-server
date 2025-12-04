@@ -4,7 +4,7 @@ import { get } from 'env-var';
 dotenv.config({ quiet: true });
 
 export const env = {
-    APP_CRON_TOKEN: get('APP_CRON_TOKEN').required().asString(),
+    APP_ACCESS_TOKEN: get('APP_ACCESS_TOKEN').required().asString(),
     APP_PORT: get('APP_PORT').required().asPortNumber(),
 
     LOGTAIL_SOURCE_TOKEN: get('LOGTAIL_SOURCE_TOKEN').required().asString(),
